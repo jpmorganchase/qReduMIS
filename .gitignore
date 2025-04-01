@@ -1,0 +1,7 @@
+./pyenv/*
+gtar/backend_system/__pycache__/*
+gtar/corrector_strategies/__pycache__/*
+gtar/quantum/__pycache__/*
+gtar/reducer/__pycache__/*
+gtar/solver/__pycache__/*
+gtar/utils/__pycache__/*
