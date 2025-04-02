@@ -7,14 +7,14 @@ import json
 import random
 import logging
 
-from qredumis.solver.quantum.quantum_selection import quantum_mis, quantum_select
-from qredumis.solver.utils.graph_helper import construct_graph_from_atom_positions
-from qredumis.solver.utils.quantum_solver_helper import get_drive, load_schedule
-from qredumis.solver.corrector_strategies.fixer import (
+from qReduMIS.solver.quantum_informer.quantum_selection import quantum_mis, quantum_select
+from qReduMIS.solver.utils.graph_helper import construct_graph_from_atom_positions
+from qReduMIS.solver.utils.quantum_solver_helper import get_drive, load_schedule
+from qReduMIS.solver.quantum_informer.corrector_strategies.fixer import (
     get_fixup_sol,
     remove_with_check_and_add,
 )
-from qredumis.solver.backend_system.base_backend import Backend
+from qReduMIS.solver.quantum_informer.backend_system.base_backend import Backend
 
 logger = logging.getLogger(__name__)
 

@@ -1,9 +1,8 @@
 [tool.poetry]
-name = "qReduMIS"
+name = "qredumis"
 version = "0.1.0"
 description = "This package contains the implementation of the algoritm qReduMIS (arXiv 2503.12551)"
 authors = ["Romina Yalovetzky", "Pragna Subrahmanya"]
-
 
 [tool.poetry.dependencies]
 python="^3.9"
@@ -15,11 +14,6 @@ sortedcontainers = "^2.4.0"
 amazon-braket-sdk="1.39.0"
 pip-licenses = "^5.0.0"
 black = "^25.1.0"
-
-[tool.pytest.ini_options]
-pythonpath = [
-  "."
-]
 
 [build-system]
 requires = ["poetry-core"]

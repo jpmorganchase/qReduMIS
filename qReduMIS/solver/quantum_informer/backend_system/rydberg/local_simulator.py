@@ -5,7 +5,7 @@
 import sys
 import json
 from braket.devices import LocalSimulator
-from qredumis.solver.backend_system.rydberg.rydberg_backend import RydbergAtomBackend
+from qReduMIS.solver.quantum_informer.backend_system.rydberg.rydberg_backend import RydbergAtomBackend
 
 class Simulator(RydbergAtomBackend):
 

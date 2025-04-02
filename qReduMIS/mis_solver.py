@@ -10,15 +10,15 @@ import logging
 from copy import deepcopy
 from typing import Literal
 
-from qredumis.solver.utils.graph_helper import (
+from qReduMIS.solver.utils.graph_helper import (
     construct_graph_from_atom_positions,
     get_reduction_factor,
     load_atoms,
     separate_atom_positions,
 )
-from qredumis.solver.reducer.reducer import Reducer
-from qredumis.solver.quantum.quantum_solver import QuantumSolver
-from qredumis.solver.backend_system.base_backend import Backend
+from qReduMIS.solver.classical_reducer.reducer import Reducer
+from qReduMIS.solver.quantum_informer.quantum_solver import QuantumSolver
+from qReduMIS.solver.quantum_informer.backend_system.base_backend import Backend
 
 logger = logging.getLogger(__name__)
 

@@ -8,6 +8,6 @@ def read_config():
     import os
     print(os.getcwd())
     config = configparser.ConfigParser()
-    config.read("qReduMIS/qredumis/configurations.ini")
+    config.read("qReduMIS/configurations.ini")
 
     return config

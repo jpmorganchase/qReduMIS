@@ -19,8 +19,8 @@ from braket.timings.time_series import TimeSeries
 from braket.ahs.pattern import Pattern
 from braket.aws import AwsDevice, AwsSession, AwsQuantumTask
 
-from qredumis.solver.backend_system.base_backend import Backend
-from qredumis.solver.utils.quantum_solver_helper import get_drive, load_schedule
+from qReduMIS.solver.quantum_informer.backend_system.base_backend import Backend
+from qReduMIS.solver.utils.quantum_solver_helper import get_drive, load_schedule
 
 
 class RydbergAtomBackend(Backend):

@@ -1,12 +1,15 @@
+import sys
+sys.path.append("./")
+
 import pytest
 import json
 import pickle
 from unittest.mock import Mock, patch
 from braket.devices import LocalSimulator
-from qredumis.solver.quantum.quantum_solver import QuantumSolver
-from qredumis.solver.backend_system.rydberg.rydberg_backend import RydbergAtomBackend
-from qredumis.solver.backend_system.backend_generator import BackendFactory
-from qredumis.solver.corrector_strategies.fixer import remove_with_check_and_add
+from qReduMIS.solver.quantum_informer.quantum_solver import QuantumSolver
+from qReduMIS.solver.quantum_informer.backend_system.rydberg.rydberg_backend import RydbergAtomBackend
+from qReduMIS.solver.quantum_informer.backend_system.backend_generator import BackendFactory
+from qReduMIS.solver.quantum_informer.corrector_strategies.fixer import remove_with_check_and_add
 
 # Fixture for the QuantumSolver instance
 @pytest.fixture
@@ -35,7 +38,7 @@ def test_get_clean_counts(quantum_solver):
     quantum_solver.quantum_backend.run_experiment.return_value = ['mocked_counts']
     
     # Mock the construct_graph_from_atom_positions function
-    with patch('qredumis.solver.utils.graph_helper.construct_graph_from_atom_positions', return_value=mock_graph):
+    with patch('qReduMIS.solver.utils.graph_helper.construct_graph_from_atom_positions', return_value=mock_graph):
         # Mock the _get_clean_solutions method
         with patch.object(QuantumSolver, '_get_clean_solutions', return_value=['mocked_solutions']) as mock_get_clean_solutions:
             clean_counts = quantum_solver.get_clean_counts(mock_atom_positions, mock_iteration)
@@ -53,7 +56,7 @@ def test_get_clean_solutions(quantum_solver):
     mocked_fixup_sol = ['fixed_sol']
 
 
-    with patch('qredumis.solver.quantum.quantum_solver.get_fixup_sol', return_value=mocked_fixup_sol) as mock_get_fixup_sol:
+    with patch('qReduMIS.solver.quantum_informer.quantum_solver.get_fixup_sol', return_value=mocked_fixup_sol) as mock_get_fixup_sol:
         clean_solutions = quantum_solver._get_clean_solutions(mock_all_counts, mock_edges_list)
         
         # Assertions
@@ -66,7 +69,7 @@ def test_find_maximum_independent_set(quantum_solver):
     mock_atom_positions = ['atom_positions']
     mock_seed = 426773
     
-    with patch('qredumis.solver.quantum.quantum_solver.quantum_mis', return_value='max_independent_set') as mock_quantum_mis:
+    with patch('qReduMIS.solver.quantum_informer.quantum_solver.quantum_mis', return_value='max_independent_set') as mock_quantum_mis:
         result = quantum_solver.find_maximum_independent_set(mock_clean_counts, mock_atom_positions, mock_seed)
         
         # Assertions
@@ -83,7 +86,7 @@ def test_select_nodes(quantum_solver):
     mock_k_size = 2
     mock_num_nodes_frac = 0.4
     
-    with patch('qredumis.solver.quantum.quantum_solver.quantum_select', return_value=('selected', 'removed', 'unchanged')) as mock_quantum_select:
+    with patch('qReduMIS.solver.quantum_informer.quantum_solver.quantum_select', return_value=('selected', 'removed', 'unchanged')) as mock_quantum_select:
         result = quantum_solver.select_nodes(
             mock_clean_counts, 
             mock_atom_positions, 

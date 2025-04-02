@@ -8,9 +8,9 @@ sys.path.append("./")
 import json
 import pickle
 
-from qredumis.solver.mis_solver import MISSolver
-from qredumis.solver.utils.graph_helper import load_atoms
-from qredumis.solver.backend_system.backend_generator import BackendFactory
+from qReduMIS.mis_solver import MISSolver
+from qReduMIS.solver.utils.graph_helper import load_atoms
+from qReduMIS.solver.quantum_informer.backend_system.backend_generator import BackendFactory
 
 import logging
 logger = logging.getLogger(__name__)
@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 def main():
 
-    atom_positions = load_atoms("qReduMIS/data/atoms_BMW2023_HP1435.json")
+    atom_positions = load_atoms("examples/input_data/problem_instances/atoms_BMW2023_HP1435.json")
     quantum_backend = BackendFactory.get_backend("Local Simulator") 
 
     mis_solver = MISSolver(

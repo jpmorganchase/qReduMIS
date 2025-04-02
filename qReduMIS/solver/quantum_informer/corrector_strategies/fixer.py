@@ -6,7 +6,7 @@
 fix these counts"""
 from typing import List, Tuple, Callable, Dict
 from collections import Counter
-from qredumis.solver.utils.corrector_helper import get_conflicting_edges
+from qReduMIS.solver.utils.corrector_helper import get_conflicting_edges
 
 
 def remove_with_check(graph: List[Tuple[int, int]], mis: List[int]) -> List[int]:

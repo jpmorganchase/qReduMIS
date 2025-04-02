@@ -7,7 +7,7 @@ from typing import List
 from braket.timings.time_series import TimeSeries
 from braket.ahs.driving_field import DrivingField
 
-from qredumis.solver.utils.config_helper import read_config
+from qReduMIS.solver.utils.config_helper import read_config
 
 
 def load_schedule():

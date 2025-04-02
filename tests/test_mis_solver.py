@@ -4,9 +4,9 @@ sys.path.append("./")
 import pytest
 import json
 from unittest.mock import patch, MagicMock
-from qredumis.solver.mis_solver import MISSolver
-from qredumis.solver.quantum.quantum_solver import QuantumSolver
-from qredumis.solver.backend_system.backend_generator import BackendFactory
+from qReduMIS.mis_solver import MISSolver
+from qReduMIS.solver.quantum_informer.quantum_solver import QuantumSolver
+from qReduMIS.solver.quantum_informer.backend_system.backend_generator import BackendFactory
 
 
 def test_solve_problem_BMW2023_HP1435_inset(mock_data_BMW2023_HP1435, mock_quantum_solver_counts_BMW2023_HP1435_inset, mock_seeds_BMW2023_HP1435_inset):
