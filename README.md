@@ -19,7 +19,7 @@ This repository contains the package of the qReduMIS algorithm, which is a quant
 
   * RydbergAtomBackend: A specialized backend for simulating quantum experiments using Rydberg atoms. It includes methods for setting up Hamiltonians, checking connectivity, and executing quantum programs.
     * Simulator: It utilizes the Braket LocalSimulator to simulate the behavior of Rydberg atoms in quantum computations
-    * Anquila: It utilizes AWS Braket for connecting to QuEra's Aquila quantum machine 
+    * Aquila: It utilizes AWS Braket for connecting to QuEra's Aquila quantum machine 
 
 
 ## Requirements 
@@ -33,7 +33,7 @@ Then follow the following steps to set up environment:
 3. poetry install  
 
 To run example module do:
-poetry run python scripts/main.py
+poetry run python examples/script.py
 
 To run tests: 
 poetry run pytest tests/

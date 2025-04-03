@@ -72,7 +72,7 @@ class MISSolver:
         solution, iterations = self._solve_problem(atom_positions, enable_storing)
         return solution, iterations
 
-    def _solve_problem(self, atom_positions, enable_storing=True, current_iteration=0):
+    def _solve_problem(self, atom_positions, enable_storing=False, current_iteration=0):
         """
         Implements QReduMIS algorithm. Given the problem instance expressed with the atom_positions, it finds the MIS.
         Note that this is an interative algorithm, which is implemented recursively.
@@ -85,6 +85,9 @@ class MISSolver:
             W: the best solution find, this is a set containins the position of the nodes
             iterations: number of iterations required for the algorithm to fully reduce the input graph.
         """
+        # check termination condition
+        if current_iteration == self.max_iteration_limit:
+            return self.W, current_iteration
 
         G = construct_graph_from_atom_positions(atom_positions)
         if not G or len(G.nodes()) == 0:
@@ -119,20 +122,22 @@ class MISSolver:
         if reduction_factor == 1:  ## if it is fully reducible, we finish here
             if len(self.S) > len(self.W):
                 self.W = self.S.copy()
-                info_iteration = {
-                    "iteration": current_iteration,
-                    "input": atom_positions,
-                    "classical reduction factor": reduction_factor,
-                    "classical kernel": classical_kernel_positions,
-                    "classical selected": classical_selected_positions,
-                    "classical removed": classical_removed_positions,
-                    "S": list(self.S),
-                    "W": list(self.W),
-                    "R": list(self.R),
-                }
+                
+                if enable_storing:
+                    info_iteration = {
+                        "iteration": current_iteration,
+                        "input": atom_positions,
+                        "classical reduction factor": reduction_factor,
+                        "classical kernel": classical_kernel_positions,
+                        "classical selected": classical_selected_positions,
+                        "classical removed": classical_removed_positions,
+                        "S": list(self.S),
+                        "W": list(self.W),
+                        "R": list(self.R),
+                    }
 
-                with open(f"info_{current_iteration}.json", "w") as f:
-                    json.dump(info_iteration, f)
+                    with open(f"info_{current_iteration}.json", "w") as f:
+                        json.dump(info_iteration, f)
 
             return self.W, current_iteration
 
@@ -196,10 +201,6 @@ class MISSolver:
 
             with open(f"info_{current_iteration}.json", "w") as f:
                 json.dump(info_iteration, f)
-
-        # check termination condition
-        if current_iteration == self.max_iteration_limit:
-            return self.W, current_iteration
 
         # recursively solve the reduced problem
         next_iteration = current_iteration + 1

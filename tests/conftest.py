@@ -77,6 +77,12 @@ def mock_quantum_solver_counts_BMW2023_HP1435_inset():
 
 
 @pytest.fixture
+def mock_clean_counts_BM2023_HP1435_inset():
+    clean_counts = json.load(open("tests/assertions/simulated_results_TN_BMW2023_HP1435/inset/clean_counts_476579.json", "r"))
+    return clean_counts
+
+
+@pytest.fixture
 def mock_seeds_BMW2023_HP1435_inset():
     seeds = [
             json.load(open("tests/assertions/simulated_results_TN_BMW2023_HP1435/inset/results_qReduMIS_it0.json", "r"))['seed'], 

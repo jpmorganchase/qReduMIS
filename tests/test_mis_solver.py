@@ -63,7 +63,7 @@ def test_solve_problem_BMW2023_HP125_outset(mock_data_BMW2023_HP125, mock_quantu
 		selection_strategy="outset",
 		quantum_backend=quantum_backend,
 		quantum_shots=10,
-		max_iteration_limit=6
+		max_iteration_limit=7
 	)
 
 	solution, iterations = solver._solve_problem(mock_data_BMW2023_HP125, 0)
@@ -86,7 +86,7 @@ def test_solve_problem_BMW2023_HP1435_outset(mock_data_BMW2023_HP1435, mock_quan
 		selection_strategy="outset",
 		quantum_backend=quantum_backend,
 		quantum_shots=10,
-		max_iteration_limit=4
+		max_iteration_limit=5
 	)
 
 	solution, iterations = solver._solve_problem(mock_data_BMW2023_HP1435, 0)
@@ -101,5 +101,30 @@ def test_solve_problem_BMW2023_HP1435_outset(mock_data_BMW2023_HP1435, mock_quan
 	assert formatted_expected_solution == solution
 
 
-# if __name__ == '__main__':
-# 	pytest.main(["tests/test_mis_solver.py"])
+def test_solve_problem_with_iteration_termination(mock_data_BMW2023_HP1435, mock_quantum_solver_counts_BMW2023_HP1435_outset, mock_seeds_BMW2023_HP1435_outset):
+	quantum_backend = BackendFactory.get_backend('Local Simulator')
+
+	max_iteration_limit = 3
+	
+	solver = MISSolver(
+		top_k_solutions=2,
+		selection_strategy="outset",
+		quantum_backend=quantum_backend,
+		quantum_shots=10,
+		max_iteration_limit=max_iteration_limit
+	)
+
+	solution, iterations = solver._solve_problem(mock_data_BMW2023_HP1435, 0)
+	
+	assert isinstance(solution, set)
+	assert iterations <= solver.max_iteration_limit
+	assert iterations == max_iteration_limit
+	assert len(solution) > 0
+
+	expected_solution = json.load(open(f"tests/assertions/simulated_results_TN_BMW2023_HP1435/outset/results_qReduMIS_it{max_iteration_limit-1}.json", "r"))['W']
+	formatted_expected_solution = set(tuple(sublist) for sublist in expected_solution)
+	assert formatted_expected_solution == solution
+
+
+if __name__ == '__main__':
+	pytest.main(["tests/test_mis_solver.py"])

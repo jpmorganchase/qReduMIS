@@ -5,6 +5,7 @@
 import random
 import logging
 import itertools
+import json
 from collections import Counter
 
 logger = logging.getLogger(__name__)
@@ -73,6 +74,9 @@ def quantum_mis(clean_counts, atom_positions, seed, version="semi-greedy"):
     Returns:
         list: list of atom positions in the selected solution
     """
+    with open(f'atom_positions.json', 'w') as json_file:
+        json.dump(atom_positions, json_file, indent=4)
+
     max_size = max([len(clean_counts[i]["nodes"]) for i in range(len(clean_counts))])
     sols_max_size = [
         clean_counts[i]
@@ -84,7 +88,7 @@ def quantum_mis(clean_counts, atom_positions, seed, version="semi-greedy"):
         random.seed(seed)
 
     a_sol_max_size = random.choice(sols_max_size)
-
+    
     return [atom_positions[i] for i in a_sol_max_size["nodes"]]
 
 
@@ -110,7 +114,7 @@ def quantum_select(
         kernel_graph (nx.Graph): reduced graph (kernel)
         original_positions (list): original list of atom positions
         seed (int): seed for reproducibilty
-        k_size (int): number of largest solution size to consider
+        k_size (int): largest solution size to consider
         num_nodes_frac (float): fraction of nodes to consider
         selection_algo (str): node selection algorithm ("outset" or "inset")
 
