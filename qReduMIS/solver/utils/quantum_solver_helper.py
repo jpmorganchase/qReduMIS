@@ -3,6 +3,7 @@
 # // Copyright 2025: Amazon Web Services, Inc. - Contributions from JPMC
 ###############################################################################
 import json
+import os
 from typing import List
 from braket.timings.time_series import TimeSeries
 from braket.ahs.driving_field import DrivingField
@@ -21,7 +22,8 @@ def load_schedule():
     if not file_path:
         print("Error: No file path provided.")
         return None
-        
+
+    print(os.getcwd())
     try:
         with open(file_path, 'r') as file:
             schedule = json.load(file)

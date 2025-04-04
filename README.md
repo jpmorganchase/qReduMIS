@@ -33,7 +33,9 @@ Then follow the following steps to set up environment:
 3. poetry install  
 
 To run example module do:
-poetry run python examples/script.py
+
+1. cd examples 
+2. poetry run python script.py
 
 To run tests: 
 poetry run pytest tests/

@@ -94,7 +94,7 @@ class MISSolver:
             return self.W, current_iteration
 
         # keep original graph for reference
-        orig_graph = deepcopy(G)  # should not be class variable
+        orig_graph = deepcopy(G) 
 
         # apply classical reduction
         K, r, s = self.classical_reducer.reduce(G)

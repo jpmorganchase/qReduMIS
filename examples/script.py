@@ -3,7 +3,7 @@
 # // Copyright 2025: Amazon Web Services, Inc. - Contributions from JPMC
 ###############################################################################
 import sys
-sys.path.append("./")
+sys.path.append("../")
 
 import json
 import pickle
@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 def main():
 
-    atom_positions = load_atoms("examples/input_data/problem_instances/atoms_BMW2023_HP1435.json")
+    atom_positions = load_atoms("input_data/problem_instances/atoms_BMW2023_HP1435.json")
     quantum_backend = BackendFactory.get_backend("Local Simulator") 
 
     mis_solver = MISSolver(
