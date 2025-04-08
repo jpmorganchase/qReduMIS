@@ -23,7 +23,6 @@ def load_schedule():
         print("Error: No file path provided.")
         return None
 
-    print(os.getcwd())
     try:
         with open(file_path, 'r') as file:
             schedule = json.load(file)
