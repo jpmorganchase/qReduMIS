@@ -42,8 +42,10 @@ poetry run pytest tests/
 
 ## How to use it? 
 
-Set up the configuration.ini file indicating the path to the schedule to be used in case of running with a Rydberg-based quantum backend. For this, edit configuration.ini
+Set up the configuration.ini file indicating the path to the schedule to be used in case of running with a Rydberg-based quantum backend. 
+For this, edit qReduMIS/configurations.ini
 
+Refer to example module on how to import and use MISSolver()
 
 SPDX-License-Identifier: Apache-2.0 @ Copyright 2025: Amazon Web Services, Inc.
 Developed as part of an engagement with JPMorgan Chase & Co. 
