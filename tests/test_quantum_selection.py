@@ -18,3 +18,50 @@ def test_quantum_mis(mock_clean_counts_BM2023_HP1435_inset):
     expected_solution = json.load(open("tests/assertions/simulated_results_TN_BMW2023_HP1435/inset/largest_solution_476579.json", "r"))
     
     assert result == expected_solution
+
+def test_quantum_select_inset(mock_clean_counts_BM2023_HP1435_inset, mock_kernel_graph_inset, mock_kernel_atoms_inset, mock_initial_atom_positions_inset):
+    k_size = 2
+    num_nodes_frac = 0.4
+    seed = 476579
+    selection_algo = 'inset'
+
+    selected_in_positions_result, selected_out_positions_result, to_remove_positions_result = quantum_select(
+        mock_clean_counts_BM2023_HP1435_inset,
+        mock_kernel_atoms_inset,
+        mock_kernel_graph_inset,
+        mock_initial_atom_positions_inset,
+        seed=seed,
+        k_size=k_size,
+        num_nodes_frac=num_nodes_frac,
+        selection_algo=selection_algo,
+    )
+
+    assert selected_in_positions_result == [[5, 6]]
+    assert selected_out_positions_result == [[5, 5], [6, 5], [6, 6], [4, 7], [6, 7]]
+    assert to_remove_positions_result == [[5, 6], [5, 5], [6, 5], [6, 6], [4, 7], [6, 7]]
+
+
+def test_quantum_select_outset(mock_clean_counts_BM2023_HP1435_outset,  mock_kernel_graph_outset, mock_kernel_atoms_outset, mock_initial_atom_positions_outset):
+    k_size = 2
+    num_nodes_frac = 0.4
+    seed = 634747
+    selection_algo = 'outset'
+
+    selected_in_positions_result, selected_out_positions_result, to_remove_positions_result = quantum_select(
+        mock_clean_counts_BM2023_HP1435_outset,
+        mock_kernel_atoms_outset,
+        mock_kernel_graph_outset,
+        mock_initial_atom_positions_outset,
+        seed=seed,
+        k_size=k_size,
+        num_nodes_frac=num_nodes_frac,
+        selection_algo=selection_algo,
+    )
+
+    assert selected_in_positions_result == []
+    assert selected_out_positions_result == [[12, 4]]
+    assert to_remove_positions_result == [[12,4]]
+
+
+if __name__ == '__main__':
+	pytest.main(["tests/test_quantum_selection.py"])

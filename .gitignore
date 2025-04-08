@@ -5,3 +5,4 @@ qReduMIS/solver/quantum_informer/backend_system/__pycache__/*
 qReduMIS/solver/quantum_informer/backend_system/rydberg/__pycache__/*
 qReduMIS/solver/quantum_informer/corrector_strategies/__pycache__/*
 qReduMIS/solver/utils/__pycache__/*
+tests/__pycache__/*
