@@ -10,6 +10,7 @@ import json
 from qReduMIS.solver.quantum_informer.quantum_selection import quantum_mis
 from qReduMIS.solver.quantum_informer.quantum_selection import quantum_select
 
+# Test for quantum_mis method
 def test_quantum_mis(mock_clean_counts_BM2023_HP1435_inset):
     input_atom_positions = json.load(open("tests/assertions/simulated_results_TN_BMW2023_HP1435/inset/atom_positions.json",  "r"))
     

@@ -2,8 +2,6 @@
 # // SPDX-License-Identifier: Apache-2.0
 # // Copyright 2025: Amazon Web Services, Inc. - Contributions from JPMC
 ###############################################################################
-"""fixer.py: tools utilized to fix the counts from backend. It can occur that nodes selected do not meet the independence (i.e., no edge between them) requirement and we
-fix these counts"""
 from typing import List, Tuple, Callable, Dict
 from collections import Counter
 from qReduMIS.solver.utils.corrector_helper import get_conflicting_edges

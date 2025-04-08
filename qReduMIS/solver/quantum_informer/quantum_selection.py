@@ -164,13 +164,12 @@ def quantum_select(
             node_counter, len(kernel_graph.nodes()), num_nodes_to_select
         )
 
-        if version == "semi-greedy":
-            # randomly select one node to remove
-            if nodes_out_set:
-                removed_node = random.choice(nodes_out_set)
-                removed_indices = [removed_node]
-                selected_out_positions = [atom_positions[i] for i in removed_indices]
-                to_remove_positions = [atom_positions[i] for i in removed_indices]
+        # randomly select one node to remove
+        if nodes_out_set:
+            removed_node = random.choice(nodes_out_set)
+            removed_indices = [removed_node]
+            selected_out_positions = [atom_positions[i] for i in removed_indices]
+            to_remove_positions = [atom_positions[i] for i in removed_indices]
 
     elif selection_algo == "inset":
         # get nodes likely to be in the set
@@ -179,22 +178,22 @@ def quantum_select(
         )
         nodes_in_set = get_inset(node_counter, num_nodes_to_select)
 
-        if version == "semi-greedy":
-            if nodes_in_set:
-                selected_node = random.choice(nodes_in_set)
+        if nodes_in_set:
+            selected_node = random.choice(nodes_in_set)
 
-                atom_selected_pos = atom_positions[selected_node]
-                selected_in_positions = [atom_selected_pos]
-                to_remove_positions = [atom_selected_pos]
-                selected_out_positions = []
+            atom_selected_pos = atom_positions[selected_node]
+            selected_in_positions = [atom_selected_pos]
+            to_remove_positions = [atom_selected_pos]
+            selected_out_positions = []
 
-                idx_node = original_positions.index(atom_selected_pos)
+            idx_node = original_positions.index(atom_selected_pos)
 
-                if hasattr(kernel_graph, "neighbors"):
-                    neighbors = list(kernel_graph.neighbors(idx_node))
+            if hasattr(kernel_graph, "neighbors"):
+                neighbors = list(kernel_graph.neighbors(idx_node))
 
-                    for n in neighbors:
-                        selected_out_positions.append(original_positions[n])
-                        to_remove_positions.append(original_positions[n])
+                for n in neighbors:
+                    selected_out_positions.append(original_positions[n])
+                    to_remove_positions.append(original_positions[n])
+                    
 
     return selected_in_positions, selected_out_positions, to_remove_positions
