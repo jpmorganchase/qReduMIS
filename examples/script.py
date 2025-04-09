@@ -12,9 +12,6 @@ from qReduMIS.mis_solver import MISSolver
 from qReduMIS.solver.utils.graph_helper import load_atoms
 from qReduMIS.solver.quantum_informer.backend_system.backend_generator import BackendFactory
 
-import logging
-logger = logging.getLogger(__name__)
-
 
 def main():
 

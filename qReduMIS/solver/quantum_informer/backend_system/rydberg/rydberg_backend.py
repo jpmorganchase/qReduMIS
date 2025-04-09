@@ -33,10 +33,8 @@ class RydbergAtomBackend(Backend):
         super().__init__()
         my_bucket = "amazon-braket-us-east-1-231197392483"
         my_prefix = "hello_quera"
+        self.schedule = None
         self.s3_folder = (my_bucket, my_prefix)
-
-        self.schedule = load_schedule()
-
         self.C6 = 5420367982440
         self.scale = scale
 
@@ -123,6 +121,7 @@ class RydbergAtomBackend(Backend):
         Returns:
             counts_postprocessed (dict): Post-processed counts from the experiment
         """
+        self.schedule = load_schedule()
 
         if self.schedule is None:
             raise ValueError("Schedule must be provided")

@@ -3,12 +3,9 @@
 # // Copyright 2025: Amazon Web Services, Inc. - Contributions from JPMC
 ###############################################################################
 import random
-import logging
 import itertools
 import json
 from collections import Counter
-
-logger = logging.getLogger(__name__)
 
 
 def get_outset(counter, num_nodes, num_select):

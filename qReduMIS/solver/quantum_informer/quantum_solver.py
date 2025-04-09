@@ -5,7 +5,6 @@
 import numpy as np
 import json
 import random
-import logging
 
 from qReduMIS.solver.quantum_informer.quantum_selection import quantum_mis, quantum_select
 from qReduMIS.solver.utils.graph_helper import construct_graph_from_atom_positions
@@ -15,8 +14,6 @@ from qReduMIS.solver.quantum_informer.corrector_strategies.fixer import (
     remove_with_check_and_add,
 )
 from qReduMIS.solver.quantum_informer.backend_system.base_backend import Backend
-
-logger = logging.getLogger(__name__)
 
 
 class QuantumSolver:

@@ -20,8 +20,6 @@ from qReduMIS.solver.classical_reducer.reducer import Reducer
 from qReduMIS.solver.quantum_informer.quantum_solver import QuantumSolver
 from qReduMIS.solver.quantum_informer.backend_system.base_backend import Backend
 
-logger = logging.getLogger(__name__)
-
 
 class MISSolver:
     """
