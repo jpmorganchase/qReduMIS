@@ -71,9 +71,6 @@ def quantum_mis(clean_counts, atom_positions, seed, version="semi-greedy"):
     Returns:
         list: list of atom positions in the selected solution
     """
-    with open(f'atom_positions.json', 'w') as json_file:
-        json.dump(atom_positions, json_file, indent=4)
-
     max_size = max([len(clean_counts[i]["nodes"]) for i in range(len(clean_counts))])
     sols_max_size = [
         clean_counts[i]
