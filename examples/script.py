@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 def main():
 
-    atom_positions = load_atoms("input_data/problem_instances/atoms_BMW2023_HP1435.json")
+    atom_positions = load_atoms("input_data/problem_instances/atoms_L8_seed3559.json")
     quantum_backend = BackendFactory.get_backend("Local Simulator") 
 
     mis_solver = MISSolver(

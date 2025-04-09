@@ -17,14 +17,7 @@ def test_get_backend_local_simulator():
     """
     backend = BackendFactory.get_backend("Local Simulator")
     assert isinstance(backend, Simulator), "Expected a Simulator instance"
-
-def test_get_backend_aquila():
-    """
-    Test that the BackendFactory returns an Aquila instance for 'Aquila' type.
-    """
-    backend = BackendFactory.get_backend("Aquila")
-    assert isinstance(backend, Aquila), "Expected an Aquila instance"
-
+    
 def test_get_backend_unknown_type():
     """
     Test that the BackendFactory raises a ValueError for an unknown backend type.

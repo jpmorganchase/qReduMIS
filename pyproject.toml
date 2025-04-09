@@ -3,7 +3,9 @@ name = "qredumis"
 version = "0.1.0"
 description = "This package contains the implementation of the algoritm qReduMIS (arXiv 2503.12551)"
 authors = ["Romina Yalovetzky", "Pragna Subrahmanya"]
-package-mode = false
+packages = [
+    { include = "qReduMIS" }
+]
 
 [tool.poetry.dependencies]
 python="^3.9"
