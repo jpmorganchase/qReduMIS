@@ -2,11 +2,18 @@
 # // SPDX-License-Identifier: Apache-2.0
 # // Copyright 2025: Amazon Web Services, Inc. - Contributions from JPMC
 ###############################################################################
+
 import os
 import configparser
+from configparser import ConfigParser
 
-def read_config():
+def read_config() -> ConfigParser:
+    """
+    Reads the configuration from a 'configurations.ini' file located in the package root directory.
 
+    Returns:
+        ConfigParser: A ConfigParser object containing the configuration data.
+    """
     # Get the directory where this script is located
     current_dir = os.path.dirname(os.path.abspath(__file__))
     

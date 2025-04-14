@@ -8,6 +8,7 @@ import json
 import tracemalloc
 from abc import abstractmethod
 from collections import Counter
+from typing import List, Tuple, Dict, Optional
 
 from braket.ahs.hamiltonian import Hamiltonian
 from braket.ahs.atom_arrangement import AtomArrangement
@@ -16,7 +17,6 @@ from braket.ahs.field import Field
 from braket.ahs.pattern import Pattern
 from braket.ahs.shifting_field import ShiftingField
 from braket.timings.time_series import TimeSeries
-from braket.ahs.pattern import Pattern
 from braket.aws import AwsDevice, AwsSession, AwsQuantumTask
 
 from qReduMIS.solver.quantum_informer.backend_system.base_backend import Backend
@@ -24,12 +24,14 @@ from qReduMIS.solver.utils.quantum_solver_helper import get_drive, load_schedule
 
 
 class RydbergAtomBackend(Backend):
+    """
+    A backend for simulating quantum experiments using Rydberg atoms.
 
-    def __init__(self, scale=5.45e-6):
-        """
-        Args:
-            scale (float): this is the lattice space in meters
-        """
+    Args:
+        scale (float): The lattice space in meters.
+    """
+
+    def __init__(self, scale: float = 5.45e-6):
         super().__init__()
         my_bucket = "amazon-braket-us-east-1-231197392483"
         my_prefix = "hello_quera"
@@ -38,27 +40,27 @@ class RydbergAtomBackend(Backend):
         self.C6 = 5420367982440
         self.scale = scale
 
-    def _setup_hamiltonian(self, atom_positions):
+    def _setup_hamiltonian(self, atom_positions: List[Tuple[int, int]]) -> Hamiltonian:
         """
-        Method to setup hamiltonian given the schedule defined in configurations.ini
+        Sets up the Hamiltonian given the schedule defined in configurations.ini.
 
         Args:
-            atom_positions: list[[int, int]] of atom positions in the space
+            atom_positions (List[Tuple[int, int]]): List of atom positions in the space.
 
         Returns:
-            Hfix: Hamiltonian
+            Hamiltonian: The configured Hamiltonian.
         """
-        # setup timeseries for the local field
+        # Setup timeseries for the local field
         Delta_local = TimeSeries()
         Delta_local.put(0.0, 0.0).put(self.schedule["time_points"][-1], 0.0)
 
-        # create pattern for all atoms (initialized to zero)
+        # Create pattern for all atoms (initialized to zero)
         h = Pattern([0] * len(atom_positions))
 
-        # create shifting field
+        # Create shifting field
         shift = ShiftingField(magnitude=Field(time_series=Delta_local, pattern=h))
 
-        # setup drive from schedule parameters
+        # Setup drive from schedule parameters
         drive = get_drive(
             self.schedule["time_points"],
             self.schedule["omega_values"],
@@ -66,11 +68,11 @@ class RydbergAtomBackend(Backend):
             self.schedule["phase_values"],
         )
 
-        # initialize Hamiltonian
+        # Initialize Hamiltonian
         Hfix = Hamiltonian()
         Hfix += drive
 
-        # add shift for tensor network simulator
+        # Add shift for tensor network simulator
         if self.backend_id == "Tensor Network Simulator":
             Hfix += shift
 
@@ -78,48 +80,50 @@ class RydbergAtomBackend(Backend):
 
     def _check_connectivity(self):
         """
-        This method performs a check to ensure the unit-disk Union-Jack like connectivity of the graph because this is required for the backend (both hardware and simulator)
+        Checks the unit-disk Union-Jack like connectivity of the graph, required for the backend.
         """
-        # calculate rydberg blockade radius
+        # Calculate Rydberg blockade radius
         omega_max = max(self.schedule["omega_values"])
         rb = (self.C6 / omega_max) ** (1 / 6)
 
-        # check connectivity constraints
+        # Check connectivity constraints
         rb_scaled = rb / (self.scale * 1e6)
 
         if not (rb_scaled < 2 and np.sqrt(2) < rb_scaled):
-            raise ValueError("not Union-Jack connectivity")
+            raise ValueError("Not Union-Jack connectivity")
 
-    def _prepare_ahs_program(self, atom_positions, Hfix):
+    def _prepare_ahs_program(self, atom_positions: List[Tuple[int, int]], Hfix: Hamiltonian) -> AnalogHamiltonianSimulation:
         """
+        Prepares the Analog Hamiltonian Simulation program.
+
         Args:
-            atom_positions: list[[int, int]] of atom positions in the space
-            Hfix: Hamiltonian of type braket.ahs.hamiltonian.Hamiltonian
-        
-        Returns: 
-            ahs_program (braket.ahs.analog_hamiltonian_simulation.AnalogHamiltonianSimulation): Analog Hamiltonian Simulation program
+            atom_positions (List[Tuple[int, int]]): List of atom positions in the space.
+            Hfix (Hamiltonian): The Hamiltonian to use.
+
+        Returns:
+            AnalogHamiltonianSimulation: The prepared AHS program.
         """
-        # setup atom arrangement
+        # Setup atom arrangement
         atoms = AtomArrangement()
         for atom in atom_positions:
             atoms.add(atom)
 
-        # create analog hamilton simulation program
+        # Create analog Hamiltonian simulation program
         ahs_program = AnalogHamiltonianSimulation(register=atoms, hamiltonian=Hfix)
 
         return ahs_program
 
-    def run_experiment(self, atom_positions, num_shots, iteration):
+    def run_experiment(self, atom_positions: List[Tuple[int, int]], num_shots: int, iteration: int) -> List[Dict[str, int]]:
         """
-        Runs the experiment on the specified backend
+        Runs the experiment on the specified backend.
 
         Args:
-            atom_positions: list of atom positions
-            num_shots: int number of shots to run on backend
-            iteration: int refers to the current iteration of the qReduMIS algorithm
+            atom_positions (List[Tuple[int, int]]): List of atom positions.
+            num_shots (int): Number of shots to run on backend.
+            iteration (int): Current iteration of the qReduMIS algorithm.
 
         Returns:
-            counts_postprocessed (dict): Post-processed counts from the experiment
+            List[Dict[str, int]]: Post-processed counts from the experiment.
         """
         self.schedule = load_schedule()
 
@@ -127,21 +131,21 @@ class RydbergAtomBackend(Backend):
             raise ValueError("Schedule must be provided")
 
         try:
-            # set up Hamiltonian
+            # Set up Hamiltonian
             Hfix = self._setup_hamiltonian(atom_positions)
 
-            # check connectivity
+            # Check connectivity
             self._check_connectivity()
 
-            # convert atom positions to si
+            # Convert atom positions to SI units
             atom_positions_si = [
                 (x * self.scale, y * self.scale) for x, y in atom_positions
             ]
 
-            # prepare Analog Hamiltonian Simulation
+            # Prepare Analog Hamiltonian Simulation
             ahs_program = self._prepare_ahs_program(atom_positions_si, Hfix)
 
-            # setup and run experiment
+            # Setup and run experiment
             task = self.execute(ahs_program, num_shots)
 
             counts_postprocessed = self.get_results(task, iteration)
@@ -151,16 +155,16 @@ class RydbergAtomBackend(Backend):
         except Exception as e:
             raise e
 
-    def execute(self, ahs_program, num_shots: int):
+    def execute(self, ahs_program: AnalogHamiltonianSimulation, num_shots: int) -> AwsQuantumTask:
         """
-        Method to execute the AHS program on the quantum device
+        Executes the AHS program on the quantum device.
 
         Args:
-            ahs_program (braket.ahs.analog_hamiltonian_simulation.AnalogHamiltonianSimulation): the program to execute
-            num_shots (int): the number of shots to run the program
-        
+            ahs_program (AnalogHamiltonianSimulation): The program to execute.
+            num_shots (int): The number of shots to run the program.
+
         Returns:
-            task: (braket.tasks.analog_hamiltonian_simulation_quantum_task_result.AnalogHamiltonianSimulationQuantumTaskResult): the task containing the results
+            AwsQuantumTask: The task containing the results.
         """
         if self.backend_id == "Aquila":
             ahs_program = ahs_program.discretize(self.device)
@@ -171,24 +175,20 @@ class RydbergAtomBackend(Backend):
 
         return task
 
-    def get_counts_from_result(self, result):
+    def get_counts_from_result(self, result) -> List[Dict[str, int]]:
         """
-        Method to extract solutions and their counts from the result
+        Extracts solutions and their counts from the result.
 
         Args:
             result (AnalogHamiltonianSimulationQuantumTaskResult): The result from the execution on the backend.
 
         Returns:
-            all_sols_postselection (list): A list of dictionaries containing the nodes of the solutions and their counts.
+            List[Dict[str, int]]: A list of dictionaries containing the nodes of the solutions and their counts.
         """
         if not result:
             raise ValueError("No result received")
 
-        states = [
-            "e",
-            "r",
-            "g",
-        ]  # e = empty, r=rydberg, g=ground state [state of atoms]
+        states = ["e", "r", "g"]  # e = empty, r = Rydberg, g = ground state
         state_labels = []
         for shot in result.measurements:
             pre = shot.pre_sequence
@@ -196,8 +196,8 @@ class RydbergAtomBackend(Backend):
             state_idx = np.array(pre) * (1 + np.array(post))
             state_labels.append("".join([states[s_idx] for s_idx in state_idx]))
 
-        occurence_count = Counter(state_labels)
-        sols = list(occurence_count.keys())
+        occurrence_count = Counter(state_labels)
+        sols = list(occurrence_count.keys())
         sols_postselection = list(
             Counter(
                 [
@@ -208,45 +208,35 @@ class RydbergAtomBackend(Backend):
             ).keys()
         )
 
-        all_sols = []
-        for sol in sols:
-            sol_dict = {}
-            atoms_mis = [
-                pos for pos, char in enumerate(sol) if char == "r"
-            ]  ## we drop the information of all the 'e' (empty)
-            sol_dict["nodes"] = tuple(atoms_mis)
-            sol_dict["count"] = occurence_count[sol]
-            all_sols.append(sol_dict)
-
         all_sols_postselection = []
         for sol in sols_postselection:
             sol_dict_postselection = {}
             atoms_mis_postselection = [
                 pos for pos, char in enumerate(sol) if char == "r"
-            ]  ## we drop the information of all the 'e' (empty)
+            ]  # Drop the information of all the 'e' (empty)
             sol_dict_postselection["nodes"] = tuple(atoms_mis_postselection)
-            sol_dict_postselection["count"] = occurence_count[sol]
+            sol_dict_postselection["count"] = occurrence_count[sol]
             all_sols_postselection.append(sol_dict_postselection)
 
         return all_sols_postselection
 
-    def get_results(self, task, iteration):
+    def get_results(self, task: AwsQuantumTask, iteration: int) -> List[Dict[str, int]]:
         """
-        Method to retrieve and process results from quantum backend
+        Retrieves and processes results from the quantum backend.
 
         Args:
             task (AwsQuantumTask): The task submitted to the quantum backend or simulator.
             iteration (int): Current iteration of the qReduMIS algorithm.
 
         Returns:
-            counts_postprocessed (dict): Post-processed counts from the experiment
+            List[Dict[str, int]]: Post-processed counts from the experiment.
         """
         result = task.result()
         raw_result = []
         counts_postprocessed = self.get_counts_from_result(result)
 
         if len(counts_postprocessed) == 0:
-            raise ValueError("postprocessed counts are empty!")
+            raise ValueError("Postprocessed counts are empty!")
 
         for shot in result.measurements:
             pre = shot.pre_sequence
@@ -278,11 +268,11 @@ class RydbergAtomBackend(Backend):
 
         results = {
             "task_id": task.id,
-            "raw_result": raw_result,  ## TO DO: make sure to store this in json seriable
+            "raw_result": raw_result,
             "counts_postprocessed": counts_postprocessed,
         }
 
-        # storing results
+        # Storing results
         with open(f"result_backend_it{iteration}.json", "w") as f:
             json.dump(results, f)
 

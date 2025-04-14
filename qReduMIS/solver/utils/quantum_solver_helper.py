@@ -13,7 +13,10 @@ from qReduMIS.solver.utils.config_helper import read_config
 
 def load_schedule():
     """
-    Load given schedule from configuration file
+    Loads the schedule from a configuration file.
+
+    Returns:
+        dict or None: The schedule loaded from the file, or None if an error occurs.
     """
     
     config = read_config()
@@ -45,16 +48,16 @@ def get_drive(
     phase_values: List[float]
 ) -> DrivingField:
     """
-    Method to obtain the driving field from a set of time points and values of the fields
+    Obtains the driving field from a set of time points and values of the fields.
 
     Args:
-        times: The time points of the driving field
-        amplitude_values: The values of the amplitude
-        detuning_values: The values of the detuning
-        phase_values: The values of the phase
+        times (List[float]): The time points of the driving field.
+        amplitude_values (List[float]): The values of the amplitude.
+        detuning_values (List[float]): The values of the detuning.
+        phase_values (List[float]): The values of the phase.
 
     Returns:
-        DrivingField: The driving field obtained
+        DrivingField: The driving field obtained.
     """
 
     assert len(times) == len(amplitude_values)
@@ -80,5 +83,5 @@ def get_drive(
 
 
 
-        
+
 

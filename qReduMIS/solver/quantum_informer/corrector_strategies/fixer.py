@@ -6,19 +6,34 @@ from typing import List, Tuple, Callable, Dict
 from collections import Counter
 from qReduMIS.solver.utils.corrector_helper import get_conflicting_edges
 
-
 def remove_with_check(graph: List[Tuple[int, int]], mis: List[int]) -> List[int]:
-    """Add a check whether removal is still necessary
-    One of the two nodes may have already been removed by a previous step."""
-    fixed = mis[:]  # copy the input for modification
+    """
+    Removes nodes from a maximum independent set (MIS) if they are part of a conflict, ensuring removal is still necessary.
+
+    Args:
+        graph (List[Tuple[int, int]]): The graph represented as a list of edges.
+        mis (List[int]): The current maximal independent set.
+
+    Returns:
+        List[int]: The corrected maximal independent set.
+    """
+    fixed = mis[:]  # Copy the input for modification
     for a, b in get_conflicting_edges(graph, mis):
         if a in fixed and b in fixed:
-            fixed.remove(a)  # only remove one if it's still necessary
+            fixed.remove(a)  # Only remove one if it's still necessary
     return fixed
 
-
 def greedy_add(graph: List[Tuple[int, int]], mis: List[int]) -> List[int]:
-    """Greedily add nodes to a candidate mis where possible."""
+    """
+    Greedily adds nodes to a candidate MIS where possible.
+
+    Args:
+        graph (List[Tuple[int, int]]): The graph represented as a list of edges.
+        mis (List[int]): The current maximal independent set.
+
+    Returns:
+        List[int]: The expanded maximal independent set.
+    """
     neighbors = {}
     counts = {}
     # Calculate the degree and number of set neighbors for each node
@@ -38,8 +53,7 @@ def greedy_add(graph: List[Tuple[int, int]], mis: List[int]) -> List[int]:
         counts[b]["deg"] += 1
         if a in mis:
             counts[b]["set"] += 1
-    # candidates are all the ones with 0 neighbors in mis
-    # (that are not set them selves)
+    # Candidates are all the ones with 0 neighbors in MIS
     candidates = []
     for node, count in counts.items():
         if node in mis:
@@ -50,7 +64,6 @@ def greedy_add(graph: List[Tuple[int, int]], mis: List[int]) -> List[int]:
     # Iterate them by increasing degree (=greedy)
     for deg, node in sorted(candidates):
         # Check that they are still valid candidates
-        # (may have been invalidated by another addition)
         valid = True
         for neighbor in neighbors[node]:
             if neighbor in mis:
@@ -60,18 +73,32 @@ def greedy_add(graph: List[Tuple[int, int]], mis: List[int]) -> List[int]:
             mis += [node]
     return sorted(mis)
 
+def remove_with_check_and_add(graph: List[Tuple[int, int]], mis: List[int]) -> List[int]:
+    """
+    Runs remove_with_check, then greedily adds nodes.
 
-def remove_with_check_and_add(
-    graph: List[Tuple[int, int]], mis: List[int]
-) -> List[int]:
-    """Run remove_with_check, then greedily add nodes."""
+    Args:
+        graph (List[Tuple[int, int]]): The graph represented as a list of edges.
+        mis (List[int]): The current maximal independent set.
+
+    Returns:
+        List[int]: The corrected and expanded maximal independent set.
+    """
     mis_r = remove_with_check(graph, mis)
     return greedy_add(graph, mis_r)
 
-
 def remove_by_participation(graph: List[Tuple[int, int]], mis: List[int]) -> List[int]:
-    """Preferentially remove nodes which are in multiple conflicts."""
-    fixed = mis[:]  # copy the input for modification
+    """
+    Preferentially removes nodes which are in multiple conflicts.
+
+    Args:
+        graph (List[Tuple[int, int]]): The graph represented as a list of edges.
+        mis (List[int]): The current maximal independent set.
+
+    Returns:
+        List[int]: The corrected maximal independent set.
+    """
+    fixed = mis[:]  # Copy the input for modification
     counter = Counter()
     conflicting = get_conflicting_edges(graph, mis)
     for a, b in conflicting:
@@ -85,15 +112,18 @@ def remove_by_participation(graph: List[Tuple[int, int]], mis: List[int]) -> Lis
                 fixed.remove(a)
     return fixed
 
+def get_fixup_sol(counts: List[Dict[Tuple, int]], edges_list: List[Tuple[int, int]], strategy: Callable) -> List[Dict[str, int]]:
+    """
+    Given some counts, the edge list of the problem instance, and a fixup method, returns the fixed counts.
 
-def get_fixup_sol(
-    counts: List[Dict[Tuple, int]],
-    edges_list: List[Tuple[int, int]],
-    strategy: Callable,
-) -> List[Dict[str, int]]:
-    """given some counts, the edge_list of the problem instance and a fixup method defined in this module,
-    it returns the fixed counts"""
+    Args:
+        counts (List[Dict[Tuple, int]]): The input counts from the quantum backend.
+        edges_list (List[Tuple[int, int]]): The edge list of the graph.
+        strategy (Callable): The fixup method to apply.
 
+    Returns:
+        List[Dict[str, int]]: The fixed solutions.
+    """
     list_fixed_sols = []
 
     for dict_solution in counts:
