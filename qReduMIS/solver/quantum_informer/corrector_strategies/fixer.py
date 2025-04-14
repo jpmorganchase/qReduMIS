@@ -2,6 +2,7 @@
 # // SPDX-License-Identifier: Apache-2.0
 # // Copyright 2025: Amazon Web Services, Inc. - Contributions from JPMC
 ###############################################################################
+
 from typing import List, Tuple, Callable, Dict
 from collections import Counter
 from qReduMIS.solver.utils.corrector_helper import get_conflicting_edges

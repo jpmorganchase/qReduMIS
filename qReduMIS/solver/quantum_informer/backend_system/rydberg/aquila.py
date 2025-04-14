@@ -2,6 +2,7 @@
 # // SPDX-License-Identifier: Apache-2.0
 # // Copyright 2025: Amazon Web Services, Inc. - Contributions from JPMC
 ###############################################################################
+
 from boto3 import Session
 from braket.aws import AwsDevice, AwsSession
 from qReduMIS.solver.quantum_informer.backend_system.rydberg.rydberg_backend import (
