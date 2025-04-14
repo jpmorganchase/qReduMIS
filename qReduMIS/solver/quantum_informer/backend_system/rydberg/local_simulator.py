@@ -5,7 +5,10 @@
 import sys
 import json
 from braket.devices import LocalSimulator
-from qReduMIS.solver.quantum_informer.backend_system.rydberg.rydberg_backend import RydbergAtomBackend
+from qReduMIS.solver.quantum_informer.backend_system.rydberg.rydberg_backend import (
+    RydbergAtomBackend,
+)
+
 
 class Simulator(RydbergAtomBackend):
 
@@ -13,8 +16,6 @@ class Simulator(RydbergAtomBackend):
         super().__init__()
         self.setup_device()
 
-    def setup_device(self):      
+    def setup_device(self):
         self.device = LocalSimulator("braket_ahs")
         self.backend_id = "Local Simulator"
-
-

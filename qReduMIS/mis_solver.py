@@ -57,7 +57,9 @@ class MISSolver:
         self.W: Set[Tuple[int, int]] = set()  # Incumbent solution
         self.R: Set[Tuple[int, int]] = set()  # Removed nodes
 
-    def solve(self, atom_positions: List[Tuple[int, int]], enable_storing: bool = True) -> Tuple[List[Tuple[int, int]], int]:
+    def solve(
+        self, atom_positions: List[Tuple[int, int]], enable_storing: bool = True
+    ) -> Tuple[List[Tuple[int, int]], int]:
         """
         Solves the MIS problem using qReduMIS given the problem instance expressed with the atom_positions.
 
@@ -71,7 +73,12 @@ class MISSolver:
         solution, iterations = self._solve_problem(atom_positions, enable_storing)
         return solution, iterations
 
-    def _solve_problem(self, atom_positions: List[Tuple[int, int]], enable_storing: bool = False, current_iteration: int = 0) -> Tuple[Set[Tuple[int, int]], int]:
+    def _solve_problem(
+        self,
+        atom_positions: List[Tuple[int, int]],
+        enable_storing: bool = False,
+        current_iteration: int = 0,
+    ) -> Tuple[Set[Tuple[int, int]], int]:
         """
         Implements QReduMIS algorithm to find the MIS. This is an iterative algorithm, implemented recursively.
 
@@ -92,7 +99,7 @@ class MISSolver:
             return self.W, current_iteration
 
         # Keep original graph for reference
-        orig_graph = deepcopy(G) 
+        orig_graph = deepcopy(G)
 
         # Apply classical reduction
         K, r, s = self.classical_reducer.reduce(G)
@@ -120,7 +127,7 @@ class MISSolver:
         if reduction_factor == 1:  # If it is fully reducible, we finish here
             if len(self.S) > len(self.W):
                 self.W = self.S.copy()
-                
+
                 if enable_storing:
                     info_iteration = {
                         "iteration": current_iteration,

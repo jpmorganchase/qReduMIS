@@ -92,7 +92,9 @@ class RydbergAtomBackend(Backend):
         if not (rb_scaled < 2 and np.sqrt(2) < rb_scaled):
             raise ValueError("Not Union-Jack connectivity")
 
-    def _prepare_ahs_program(self, atom_positions: List[Tuple[int, int]], Hfix: Hamiltonian) -> AnalogHamiltonianSimulation:
+    def _prepare_ahs_program(
+        self, atom_positions: List[Tuple[int, int]], Hfix: Hamiltonian
+    ) -> AnalogHamiltonianSimulation:
         """
         Prepares the Analog Hamiltonian Simulation program.
 
@@ -113,7 +115,9 @@ class RydbergAtomBackend(Backend):
 
         return ahs_program
 
-    def run_experiment(self, atom_positions: List[Tuple[int, int]], num_shots: int, iteration: int) -> List[Dict[str, int]]:
+    def run_experiment(
+        self, atom_positions: List[Tuple[int, int]], num_shots: int, iteration: int
+    ) -> List[Dict[str, int]]:
         """
         Runs the experiment on the specified backend.
 
@@ -155,7 +159,9 @@ class RydbergAtomBackend(Backend):
         except Exception as e:
             raise e
 
-    def execute(self, ahs_program: AnalogHamiltonianSimulation, num_shots: int) -> AwsQuantumTask:
+    def execute(
+        self, ahs_program: AnalogHamiltonianSimulation, num_shots: int
+    ) -> AwsQuantumTask:
         """
         Executes the AHS program on the quantum device.
 

@@ -4,11 +4,13 @@
 ###############################################################################
 from boto3 import Session
 from braket.aws import AwsDevice, AwsSession
-from qReduMIS.solver.quantum_informer.backend_system.rydberg.rydberg_backend import RydbergAtomBackend
+from qReduMIS.solver.quantum_informer.backend_system.rydberg.rydberg_backend import (
+    RydbergAtomBackend,
+)
 
 
 class Aquila(RydbergAtomBackend):
-    
+
     def __init__(self):
         super().__init__()
         self.my_bucket = "amazon-braket-us-east-1-231197392483"
@@ -20,6 +22,8 @@ class Aquila(RydbergAtomBackend):
     def setup_device(self):
         boto_session = Session(region_name="us-east-1")
         aws_session = AwsSession(boto_session=boto_session)
-        aquila = AwsDevice("arn:aws:braket:us-east-1::device/qpu/quera/Aquila",aws_session)
-        self.device= aquila
-        self.backend_id = 'Aquila'
+        aquila = AwsDevice(
+            "arn:aws:braket:us-east-1::device/qpu/quera/Aquila", aws_session
+        )
+        self.device = aquila
+        self.backend_id = "Aquila"

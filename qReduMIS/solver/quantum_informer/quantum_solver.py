@@ -9,7 +9,10 @@ import json
 import random
 from typing import List, Tuple, Optional
 
-from qReduMIS.solver.quantum_informer.quantum_selection import quantum_mis, quantum_select
+from qReduMIS.solver.quantum_informer.quantum_selection import (
+    quantum_mis,
+    quantum_select,
+)
 from qReduMIS.solver.utils.graph_helper import construct_graph_from_atom_positions
 from qReduMIS.solver.utils.quantum_solver_helper import get_drive, load_schedule
 from qReduMIS.solver.quantum_informer.corrector_strategies.fixer import (
@@ -38,7 +41,12 @@ class QuantumSolver:
 
         self.clean_counts = None
 
-    def get_clean_counts(self, atom_positions: List[Tuple[float, float]], iteration: int, graph: Optional[nx.Graph] = None) -> List[dict]:
+    def get_clean_counts(
+        self,
+        atom_positions: List[Tuple[float, float]],
+        iteration: int,
+        graph: Optional[nx.Graph] = None,
+    ) -> List[dict]:
         """
         Runs an experiment on the quantum backend and processes the results.
 
@@ -67,7 +75,10 @@ class QuantumSolver:
         return clean_solutions
 
     def _get_clean_solutions(
-        self, all_counts: List[dict], edges_list: List[Tuple[int, int]], method=remove_with_check_and_add
+        self,
+        all_counts: List[dict],
+        edges_list: List[Tuple[int, int]],
+        method=remove_with_check_and_add,
     ) -> List[dict]:
         """
         Fixes the input counts based on a method to ensure independence (i.e., no edge between selected nodes).
@@ -82,7 +93,12 @@ class QuantumSolver:
         """
         return get_fixup_sol(all_counts, edges_list, method)
 
-    def find_maximum_independent_set(self, clean_counts: List[dict], atom_positions: List[Tuple[float, float]], seed: int) -> List[Tuple[float, float]]:
+    def find_maximum_independent_set(
+        self,
+        clean_counts: List[dict],
+        atom_positions: List[Tuple[float, float]],
+        seed: int,
+    ) -> List[Tuple[float, float]]:
         """
         Finds the largest solution measured, representing the MIS given by the backend.
 
@@ -105,7 +121,9 @@ class QuantumSolver:
         seed: int,
         k_size: int = 2,
         num_nodes_frac: float = 0.4,
-    ) -> Tuple[List[Tuple[float, float]], List[Tuple[float, float]], List[Tuple[float, float]]]:
+    ) -> Tuple[
+        List[Tuple[float, float]], List[Tuple[float, float]], List[Tuple[float, float]]
+    ]:
         """
         Selects nodes to be included in or removed from the solution based on the selection strategy.
 
@@ -119,7 +137,7 @@ class QuantumSolver:
             num_nodes_frac (float): Fraction of nodes to consider.
 
         Returns:
-            Tuple[List[Tuple[float, float]], List[Tuple[float, float]], List[Tuple[float, float]]]: 
+            Tuple[List[Tuple[float, float]], List[Tuple[float, float]], List[Tuple[float, float]]]:
                 - selected_in_positions: Nodes selected to be part of the solution.
                 - selected_out_positions: Nodes selected to be removed from the solution.
                 - to_remove_positions: Positions of nodes to be removed from the kernel.

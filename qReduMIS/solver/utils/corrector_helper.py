@@ -5,7 +5,10 @@
 
 from typing import List, Tuple
 
-def get_conflicting_edges(graph: List[Tuple[int, int]], mis: List[int]) -> List[Tuple[int, int]]:
+
+def get_conflicting_edges(
+    graph: List[Tuple[int, int]], mis: List[int]
+) -> List[Tuple[int, int]]:
     """
     Identifies conflicting edges in a graph based on a given maximal independent set (MIS).
 

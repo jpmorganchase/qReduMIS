@@ -6,6 +6,7 @@ from typing import List, Tuple, Callable, Dict
 from collections import Counter
 from qReduMIS.solver.utils.corrector_helper import get_conflicting_edges
 
+
 def remove_with_check(graph: List[Tuple[int, int]], mis: List[int]) -> List[int]:
     """
     Removes nodes from a maximum independent set (MIS) if they are part of a conflict, ensuring removal is still necessary.
@@ -22,6 +23,7 @@ def remove_with_check(graph: List[Tuple[int, int]], mis: List[int]) -> List[int]
         if a in fixed and b in fixed:
             fixed.remove(a)  # Only remove one if it's still necessary
     return fixed
+
 
 def greedy_add(graph: List[Tuple[int, int]], mis: List[int]) -> List[int]:
     """
@@ -73,7 +75,10 @@ def greedy_add(graph: List[Tuple[int, int]], mis: List[int]) -> List[int]:
             mis += [node]
     return sorted(mis)
 
-def remove_with_check_and_add(graph: List[Tuple[int, int]], mis: List[int]) -> List[int]:
+
+def remove_with_check_and_add(
+    graph: List[Tuple[int, int]], mis: List[int]
+) -> List[int]:
     """
     Runs remove_with_check, then greedily adds nodes.
 
@@ -86,6 +91,7 @@ def remove_with_check_and_add(graph: List[Tuple[int, int]], mis: List[int]) -> L
     """
     mis_r = remove_with_check(graph, mis)
     return greedy_add(graph, mis_r)
+
 
 def remove_by_participation(graph: List[Tuple[int, int]], mis: List[int]) -> List[int]:
     """
@@ -112,7 +118,12 @@ def remove_by_participation(graph: List[Tuple[int, int]], mis: List[int]) -> Lis
                 fixed.remove(a)
     return fixed
 
-def get_fixup_sol(counts: List[Dict[Tuple, int]], edges_list: List[Tuple[int, int]], strategy: Callable) -> List[Dict[str, int]]:
+
+def get_fixup_sol(
+    counts: List[Dict[Tuple, int]],
+    edges_list: List[Tuple[int, int]],
+    strategy: Callable,
+) -> List[Dict[str, int]]:
     """
     Given some counts, the edge list of the problem instance, and a fixup method, returns the fixed counts.
 

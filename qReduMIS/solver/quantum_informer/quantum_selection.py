@@ -30,7 +30,9 @@ def get_outset(counter: Counter, num_nodes: int, num_select: int) -> List[int]:
         return nodes_out_set[:num_select]
 
     rem_needed = num_select - len(nodes_out_set)
-    lowest_probability_nodes = [key for key, _ in counter.most_common()[::-1][:rem_needed]]
+    lowest_probability_nodes = [
+        key for key, _ in counter.most_common()[::-1][:rem_needed]
+    ]
     nodes_out_set.extend(lowest_probability_nodes)
 
     return nodes_out_set
@@ -50,7 +52,12 @@ def get_inset(counter: Counter, num_select: int) -> List[int]:
     return [key for key, _ in counter.most_common()[:num_select]]
 
 
-def quantum_mis(clean_counts: List[Dict[str, Union[List[int], str, int]]], atom_positions: List[Tuple[float, float]], seed: int, version: str = "semi-greedy") -> List[Tuple[float, float]]:
+def quantum_mis(
+    clean_counts: List[Dict[str, Union[List[int], str, int]]],
+    atom_positions: List[Tuple[float, float]],
+    seed: int,
+    version: str = "semi-greedy",
+) -> List[Tuple[float, float]]:
     """
     Extracts the largest solution measured by the backend given the counts.
 
@@ -64,13 +71,17 @@ def quantum_mis(clean_counts: List[Dict[str, Union[List[int], str, int]]], atom_
         List[Tuple[float, float]]: List of atom positions in the selected solution.
     """
     max_size = max([len(clean_counts[i]["nodes"]) for i in range(len(clean_counts))])
-    sols_max_size = [clean_counts[i] for i in range(len(clean_counts)) if len(clean_counts[i]["nodes"]) == max_size]
+    sols_max_size = [
+        clean_counts[i]
+        for i in range(len(clean_counts))
+        if len(clean_counts[i]["nodes"]) == max_size
+    ]
 
     if version == "semi-greedy":
         random.seed(seed)
 
     a_sol_max_size = random.choice(sols_max_size)
-    
+
     return [atom_positions[i] for i in a_sol_max_size["nodes"]]
 
 
@@ -84,7 +95,9 @@ def quantum_select(
     num_nodes_frac: float = 0.4,
     selection_algo: str = "outset",
     version: str = "semi-greedy",
-) -> Tuple[List[Tuple[float, float]], List[Tuple[float, float]], List[Tuple[float, float]]]:
+) -> Tuple[
+    List[Tuple[float, float]], List[Tuple[float, float]], List[Tuple[float, float]]
+]:
     """
     Selects nodes to be included in or removed from the solution based on selection algorithm.
 
@@ -99,7 +112,7 @@ def quantum_select(
         selection_algo (str): Node selection algorithm ("outset" or "inset").
 
     Returns:
-        Tuple[List[Tuple[float, float]], List[Tuple[float, float]], List[Tuple[float, float]]]: 
+        Tuple[List[Tuple[float, float]], List[Tuple[float, float]], List[Tuple[float, float]]]:
             - selected_in_positions: Nodes selected to be part of the solution.
             - selected_out_positions: Nodes selected to be removed from the solution.
             - to_remove_positions: Positions of nodes to be removed from the kernel.
@@ -117,12 +130,23 @@ def quantum_select(
     solution_sizes = list(set([len(sol["nodes"]) for sol in clean_counts]))
     sizes_to_consider = sorted(solution_sizes, reverse=True)[:k_size]
 
-    nodes_from_top_solutions = [sol["nodes"] for sol in clean_counts for _ in range(sol["count"]) if len(sol["nodes"]) in sizes_to_consider]
-    node_counter = Counter(list(itertools.chain.from_iterable(nodes_from_top_solutions)))
+    nodes_from_top_solutions = [
+        sol["nodes"]
+        for sol in clean_counts
+        for _ in range(sol["count"])
+        if len(sol["nodes"]) in sizes_to_consider
+    ]
+    node_counter = Counter(
+        list(itertools.chain.from_iterable(nodes_from_top_solutions))
+    )
 
     if selection_algo == "outset":
-        num_nodes_to_select = max(1, int(num_nodes_frac * len(node_counter))) if node_counter else 1
-        nodes_out_set = get_outset(node_counter, len(kernel_graph.nodes()), num_nodes_to_select)
+        num_nodes_to_select = (
+            max(1, int(num_nodes_frac * len(node_counter))) if node_counter else 1
+        )
+        nodes_out_set = get_outset(
+            node_counter, len(kernel_graph.nodes()), num_nodes_to_select
+        )
 
         if nodes_out_set:
             removed_node = random.choice(nodes_out_set)
@@ -131,7 +155,9 @@ def quantum_select(
             to_remove_positions = [atom_positions[i] for i in removed_indices]
 
     elif selection_algo == "inset":
-        num_nodes_to_select = max(1, int(num_nodes_frac * len(node_counter))) if node_counter else 1
+        num_nodes_to_select = (
+            max(1, int(num_nodes_frac * len(node_counter))) if node_counter else 1
+        )
         nodes_in_set = get_inset(node_counter, num_nodes_to_select)
 
         if nodes_in_set:
