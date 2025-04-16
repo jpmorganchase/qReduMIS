@@ -43,7 +43,9 @@ Then follow the following steps to set up environment. In this directory do:
 1. pip install poetry 
 3. poetry install  
 
-To run example module do below. 
+## How to use it? 
+
+To run example module do below:
 
 1. cd examples 
 2. poetry run python script.py
@@ -51,12 +53,10 @@ To run example module do below.
 To run tests: 
 poetry run pytest tests/
 
-## How to use it? 
+To run for your own problem instances and with your configuration:
 
 Set up the configuration.ini file indicating the path to the schedule to be used in case of running with a Rydberg-based quantum backend. 
-For this, edit qReduMIS/configurations.ini
-
-Refer to examples/script.py on how to import and use MISSolver()
+For this, edit qReduMIS/configurations.ini. Refer to examples/script.py on how to import and use MISSolver() and pass the problem instance. 
 
 SPDX-License-Identifier: Apache-2.0 @ Copyright 2025: Amazon Web Services, Inc.
 Developed as part of an engagement with JPMorgan Chase & Co. 
