@@ -1,8 +1,7 @@
 [tool.poetry]
 name = "qredumis"
 version = "0.1.0"
-description = "This package contains the implementation of the algoritm qReduMIS (arXiv 2503.12551)"
-authors = ["Romina Yalovetzky", "Pragna Subrahmanya"]
+description = "This package contains the implementation of the algorithm qReduMIS (arXiv 2503.12551)"
 packages = [
     { include = "qReduMIS" }
 ]
