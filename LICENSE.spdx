@@ -3,5 +3,5 @@ DataLicense: CC0-1.0
 Creator: JP Morgan Chase & Co
 PackageName: {project name}
 PackageOriginator: JP Morgan Chase & Co
-PackageHomePage: https://github.com/jpmorganchase/{project slug}
+PackageHomePage: https://github.com/jpmorganchase/qredumis
 PackageLicenseDeclared: Apache-2.0

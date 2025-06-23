@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "qredumis"
+version = "0.1.0"
+description = "This package contains the implementation of the algorithm qReduMIS (arXiv 2503.12551)"
+packages = [
+    { include = "qReduMIS" }
+]
+
+[tool.poetry.dependencies]
+python="^3.9"
+matplotlib="3.7.1"
+networkx="2.8.8"
+numpy="1.23.5"
+pytest="7.2.2"
+sortedcontainers = "^2.4.0"
+amazon-braket-sdk="1.39.0"
+pip-licenses = "^5.0.0"
+black = "^25.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
