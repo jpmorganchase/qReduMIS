@@ -1,1 +1,0 @@
-{"|MIS|": 2, "D_(MIS)": 7, "candidates MIS": [{"nodes": [0, 6]}, {"nodes": [1, 6]}, {"nodes": [0, 5]}, {"nodes": [1, 5]}, {"nodes": [4, 5]}, {"nodes": [1, 2]}, {"nodes": [2, 4]}], "|MIS|-1": 1, "D_(MIS-1)": 6}
