@@ -1,0 +1,1 @@
+{"|MIS|": 3, "D_(MIS)": 3, "candidates MIS": [{"nodes": [0, 4, 6]}, {"nodes": [1, 4, 6]}, {"nodes": [1, 2, 6]}], "|MIS|-1": 2, "D_(MIS-1)": 21}
