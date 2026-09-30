@@ -1,12 +1,20 @@
 # This folder contains the main code utilized for paper "qReduMIS: A Quantum-Informed Reduction Algorithm for the Maximum Independent Set Problem"
 
 ## Citing the work
-```
-@article{schuetz2025qredumis,
-  title={qReduMIS: A Quantum-Informed Reduction Algorithm for the Maximum Independent Set Problem},
-  author={Schuetz, Martin JA and Yalovetzky, Romina and Andrist, Ruben S and Salton, Grant and Sun, Yue and Raymond, Rudy and Chakrabarti, Shouvanik and Acharya, Atithi and Shaydulin, Ruslan and Pistoia, Marco and others},
-  journal={arXiv preprint arXiv:2503.12551},
-  year={2025}
+```bibtex
+@article{schuetz2026qredumis,
+  title = {Quantum-informed reduction algorithm for the maximum independent set problem},
+  author = {Schuetz, Martin J. A. and Yalovetzky, Romina and Andrist, Ruben S. and Salton, Grant and Sun, Yue and Raymond, Rudy and Chakrabarti, Shouvanik and Acharya, Atithi and Shaydulin, Ruslan and Pistoia, Marco and Katzgraber, Helmut G.},
+  journal = {Phys. Rev. Res.},
+  volume = {8},
+  issue = {3},
+  pages = {033296},
+  numpages = {13},
+  year = {2026},
+  month = {Sep},
+  publisher = {American Physical Society},
+  doi = {10.1103/nh3b-1wv5},
+  url = {https://link.aps.org/doi/10.1103/nh3b-1wv5}
 }
 ```
 
