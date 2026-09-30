@@ -2,11 +2,15 @@
 # // SPDX-License-Identifier: Apache-2.0
 # // Copyright 2025: Amazon Web Services, Inc. - Contributions from JPMC
 ###############################################################################
-from qReduMIS.solver.quantum_informer.backend_system.base_backend import Backend
-from qReduMIS.solver.quantum_informer.backend_system.rydberg.local_simulator import (
+from qReduMIS.solver.informers.quantum.quantumannealing.backend_system.base_backend import (
+    Backend,
+)
+from qReduMIS.solver.informers.quantum.quantumannealing.backend_system.rydberg.local_simulator import (
     Simulator,
 )
-from qReduMIS.solver.quantum_informer.backend_system.rydberg.aquila import Aquila
+from qReduMIS.solver.informers.quantum.quantumannealing.backend_system.rydberg.aquila import (
+    Aquila,
+)
 
 
 class BackendFactory:

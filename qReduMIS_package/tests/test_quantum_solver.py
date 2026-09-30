@@ -11,14 +11,14 @@ import json
 import pickle
 from unittest.mock import Mock, patch
 from braket.devices import LocalSimulator
-from qReduMIS.solver.quantum_informer.quantum_solver import QuantumSolver
-from qReduMIS.solver.quantum_informer.backend_system.rydberg.rydberg_backend import (
+from qReduMIS.solver.informers.quantum.quantumannealing.informer import QuantumSolver
+from qReduMIS.solver.informers.quantum.quantumannealing.backend_system.rydberg.rydberg_backend import (
     RydbergAtomBackend,
 )
-from qReduMIS.solver.quantum_informer.backend_system.backend_generator import (
+from qReduMIS.solver.informers.quantum.quantumannealing.backend_system.backend_generator import (
     BackendFactory,
 )
-from qReduMIS.solver.quantum_informer.corrector_strategies.fixer import (
+from qReduMIS.solver.informers.corrector_strategies.fixer import (
     remove_with_check_and_add,
 )
 
@@ -125,7 +125,7 @@ def test_get_clean_solutions(quantum_solver):
     mocked_fixup_sol = ["fixed_sol"]
 
     with patch(
-        "qReduMIS.solver.quantum_informer.quantum_solver.get_fixup_sol",
+        "qReduMIS.solver.informers.quantum.quantumannealing.informer.get_fixup_sol",
         return_value=mocked_fixup_sol,
     ) as mock_get_fixup_sol:
         clean_solutions = quantum_solver._get_clean_solutions(
@@ -146,7 +146,7 @@ def test_find_maximum_independent_set(quantum_solver):
     mock_seed = 426773
 
     with patch(
-        "qReduMIS.solver.quantum_informer.quantum_solver.quantum_mis",
+        "qReduMIS.solver.informers.quantum.quantumannealing.informer.quantum_mis",
         return_value="max_independent_set",
     ) as mock_quantum_mis:
         result = quantum_solver.find_maximum_independent_set(
@@ -296,7 +296,7 @@ def test_select_nodes(quantum_solver):
     mock_num_nodes_frac = 0.4
 
     with patch(
-        "qReduMIS.solver.quantum_informer.quantum_solver.quantum_select",
+        "qReduMIS.solver.informers.quantum.quantumannealing.informer.quantum_select",
         return_value=("selected", "removed", "unchanged"),
     ) as mock_quantum_select:
         result = quantum_solver.select_nodes(

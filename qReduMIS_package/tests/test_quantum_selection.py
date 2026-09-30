@@ -8,27 +8,32 @@ sys.path.append("./")
 
 import pytest
 import json
-from qReduMIS.solver.quantum_informer.quantum_selection import quantum_mis
-from qReduMIS.solver.quantum_informer.quantum_selection import quantum_select
+from pathlib import Path
+from qReduMIS.solver.informers.selection import (
+    find_maximum_independent_set_positions as quantum_mis,
+    select_frozen_positions as quantum_select,
+)
+
+# Anchor asset paths to this file so the tests pass regardless of the working
+# directory pytest is invoked from.
+_ASSETS = (
+    Path(__file__).resolve().parent
+    / "assertions"
+    / "simulated_results_TN_BMW2023_HP1435"
+)
 
 
 # Test for quantum_mis method
 def test_quantum_mis(mock_clean_counts_BM2023_HP1435_inset):
     input_atom_positions = json.load(
-        open(
-            "tests/assertions/simulated_results_TN_BMW2023_HP1435/inset/atom_positions.json",
-            "r",
-        )
+        open(_ASSETS / "inset" / "atom_positions.json", "r")
     )
 
     result = quantum_mis(
         mock_clean_counts_BM2023_HP1435_inset, input_atom_positions, 476579
     )
     expected_solution = json.load(
-        open(
-            "tests/assertions/simulated_results_TN_BMW2023_HP1435/inset/largest_solution_476579.json",
-            "r",
-        )
+        open(_ASSETS / "inset" / "largest_solution_476579.json", "r")
     )
 
     assert result == expected_solution

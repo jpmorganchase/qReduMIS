@@ -7,12 +7,16 @@ import sys
 sys.path.append("./")
 
 import pytest
-from qReduMIS.solver.quantum_informer.backend_system.base_backend import Backend
-from qReduMIS.solver.quantum_informer.backend_system.rydberg.local_simulator import (
+from qReduMIS.solver.informers.quantum.quantumannealing.backend_system.base_backend import (
+    Backend,
+)
+from qReduMIS.solver.informers.quantum.quantumannealing.backend_system.rydberg.local_simulator import (
     Simulator,
 )
-from qReduMIS.solver.quantum_informer.backend_system.rydberg.aquila import Aquila
-from qReduMIS.solver.quantum_informer.backend_system.backend_generator import (
+from qReduMIS.solver.informers.quantum.quantumannealing.backend_system.rydberg.aquila import (
+    Aquila,
+)
+from qReduMIS.solver.informers.quantum.quantumannealing.backend_system.backend_generator import (
     BackendFactory,
 )
 

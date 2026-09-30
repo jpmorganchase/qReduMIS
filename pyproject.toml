@@ -2,23 +2,95 @@
 name = "qredumis"
 version = "0.1.0"
 description = "This package contains the implementation of the algorithm qReduMIS (arXiv 2503.12551)"
+authors = ["Romina Yalovetzky", "Pragna Subrahmanya"]
 packages = [
-    { include = "qReduMIS" }
+    { include = "qReduMIS", from = "qReduMIS_package" }
+]
+include = [
+    "qReduMIS/configurations.ini",
+    "qReduMIS/input_data/schedules/*.json",
+    "qReduMIS/solver/informers/quantum/qaoa/*.json",
+]
+# Never ship a compiled binary with the library. The SA informer's C++ sources
+# are distributed so users can build `sa_solver` themselves via the Makefile,
+# but any locally compiled artifact is kept out of the sdist/wheel.
+#
+# Notebooks and the SA test-suite live in the repository for development and
+# documentation, but they are not part of the installed library, so they are
+# excluded from the sdist/wheel to keep the distribution lean.
+exclude = [
+    "qReduMIS/solver/informers/classical/sa/_cpp/sa_solver",
+    "qReduMIS/solver/informers/classical/sa/_cpp/*.o",
+    "qReduMIS/**/*.ipynb",
+    "qReduMIS/solver/informers/classical/sa/tests/**",
 ]
 
 [tool.poetry.dependencies]
-python="^3.9"
-matplotlib="3.7.1"
+python=">=3.11,<3.12"
 networkx="2.8.8"
 numpy="1.23.5"
-pytest="7.2.2"
-sortedcontainers = "^2.4.0"
+sortedcontainers = "2.4.0"
 amazon-braket-sdk="1.39.0"
-pip-licenses = "^5.0.0"
+# amazon-braket-sdk still imports pkg_resources, which was removed from
+# setuptools>=81; pin below that so the Rydberg backends import on Python 3.11.
+setuptools="<81"
+# Required by the default QAOA informer (qReduMIS.solver.informers.quantum.qaoa):
+# qiskit builds the circuits and qiskit-aer runs the local statevector/shot
+# simulation used by QAOAInformer(simulation_backend="local").
+qiskit="2.3.1"
+qiskit-aer="0.17.2"
+
+# Development / tooling dependencies.
+[tool.poetry.group.dev.dependencies]
+pytest="7.2.2"
 black = "^25.1.0"
+pip-licenses = "^4.3.3"
+# Needed to execute the example notebooks (qReduMIS/example.ipynb, examples/*).
+# Not required by the installed library, which never imports either package.
+ipykernel="7.3.0"
+matplotlib="3.7.1"
+
+# Extra dependencies required to run the paper-reproduction notebooks under
+# results_experiments/. Install with: poetry install --with paper
+[tool.poetry.group.paper.dependencies]
+pandas = "2.3.3"
+seaborn = "0.13.2"
+statsmodels = "0.14.6"
+scipy = "1.15.3"
+ortools = "9.14.6206"
+pyyaml = "6.0.3"
+pytket = "1.25.0"
+nbconvert = "7.17.1"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+# The whole `qReduMIS_package/` tree is black-formatted; check it in CI with
+# `black --check qReduMIS_package`. The paper-reproduction code under
+# `results_experiments/` is intentionally left untouched so the published
+# notebooks keep matching the figures in the paper.
+line-length = 88
+target-version = ["py311"]
+extend-exclude = '''
+/(
+    results_experiments
+  | \.venv
+)/
+'''
+
+[tool.pytest.ini_options]
+# Restrict collection to the package layout so stray files outside the project
+# (build artefacts, scratch copies) can never be picked up by a bare `pytest`.
+testpaths = [
+    "qReduMIS_package/tests",
+    "qReduMIS_package/qReduMIS/solver",
+]
+markers = [
+    "sa: tests that require the compiled `sa_solver` C++ binary (not shipped with the library). Run them with `pytest -m sa` after building it via `cd qReduMIS_package/qReduMIS/solver/informers/classical/sa/_cpp && make`.",
+]
+# Skip the binary-dependent SA tests unless explicitly requested with `-m sa`.
+addopts = ["-m", "not sa"]
 
 

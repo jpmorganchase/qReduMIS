@@ -1,99 +1,134 @@
 # Code for paper "qReduMIS: A Quantum-Informed Reduction Algorithm for the Maximum Independent Set Problem"
 
-This repository contains the package of the qReduMIS algorithm, which is a
-quantum-informed reduction algorithm for the Maximum Independent Set (MIS)
-problem ([arXiv:2503.12551](https://arxiv.org/abs/2503.12551)).
+This repository contains the package of the qReduMIS algorithm, which is a quantum-informed reduction algorithm for the Maximum Independent Set (MIS) problem (arXiv:2503.12551).
 
 ## Citing the work
 ```
-@article{schuetz2025qredumis,
-  title={qReduMIS: A Quantum-Informed Reduction Algorithm for the Maximum Independent Set Problem},
-  author={Schuetz, Martin JA and Yalovetzky, Romina and Andrist, Ruben S and Salton, Grant and Sun, Yue and Raymond, Rudy and Chakrabarti, Shouvanik and Acharya, Atithi and Shaydulin, Ruslan and Pistoia, Marco and others},
-  journal={arXiv preprint arXiv:2503.12551},
-  year={2025}
+@article{nh3b-1wv5,
+  title = {Quantum-informed reduction algorithm for the maximum independent set problem},
+  author = {Schuetz, Martin J. A. and Yalovetzky, Romina and Andrist, Ruben S. and Salton, Grant and Sun, Yue and Raymond, Rudy and Chakrabarti, Shouvanik and Acharya, Atithi and Shaydulin, Ruslan and Pistoia, Marco and Katzgraber, Helmut G.},
+  journal = {Phys. Rev. Res.},
+  volume = {8},
+  issue = {3},
+  pages = {033296},
+  numpages = {13},
+  year = {2026},
+  month = {Sep},
+  publisher = {American Physical Society},
+  doi = {10.1103/nh3b-1wv5},
+  url = {https://link.aps.org/doi/10.1103/nh3b-1wv5}
 }
 ```
+
+## This repository is divided into the folders:
+  * examples/: runnable example script (script.py) and notebook (example.ipynb), with sample input data and results.
+  * qReduMIS/: the package source code
+  * tests/: the test suite
+  * ../results_experiments/: scripts, data and notebooks to reproduce the paper results
+
 ## Features
 
-This repository is divided into the folders:
-* `examples/`: it contains an example script.py and some input data in
-  `input_data/` in order to run the package
-* `qReduMIS/`: it contains the code of the package
-* `tests/`: it contains some tests for the package
+qReduMIS is a hybrid classical–quantum algorithm. It pairs a **classical reducer**
+(in `qReduMIS/solver/classical_reducer/`) with a pluggable **informer** (in
+`qReduMIS/solver/informers/`). The solver, `MISSolver`
+(`qReduMIS/mis_solver.py`), alternates classical reductions with informer calls
+on the remaining *kernel* graph until it collapses.
 
-qReduMIS is a hybrid classical-quantum algorithm, which leverages a classical
-reducer (contained in `qReduMIS/solver/classical_reducer/`) and a quantum
-informer (contained in `qReduMIS/solver/quantum_informer/`) which informs of
-nodes to remove in order to unlock the classical reduction of the kernel graph.
+Every informer implements the same interface
+(`qReduMIS/solver/informers/base.py`) and plays two roles: (a) select nodes to
+freeze/remove to unlock the next classical reduction, and (b) track the largest
+independent set seen so far. The frozen-node selection logic is shared across all
+informers in `qReduMIS/solver/informers/selection.py`.
 
-The quantum informer plays two roles: (a) select nodes to remove and inform the
-next classical reduction and (b) keep track of an incumbent solution, for which
-keeps track of the largest solution identified by the backend. For (a) the code
-is in `qReduMIS/solver/quantum_informer/quantum_selection.py` and for (b) in
-`qReduMIS/solver/quantum_informer/quantum_solver.py` which contains:
+Available informers:
 
-* QuantumSolver Class: the core class responsible for orchestrating the quantum
-  computation process. It interfaces with quantum backends to run experiments
-  and processes the results to find the maximum independent set.
+  * **QAOAInformer** (`solver/informers/quantum/qaoa/`) — depth-`p` QAOA on a local
+    Qiskit Aer simulator.
+  * **QuantumAnnealingInformer** (`solver/informers/quantum/quantumannealing/`) —
+    Rydberg-atom analog computation. The backend system (`backend_system/`)
+    abstracts hardware/simulator access via `BackendFactory`:
+      * **Simulator**: Braket `LocalSimulator("braket_ahs")`.
+      * **Aquila**: QuEra's Aquila QPU via AWS Braket.
+  * **SAInformer** (`solver/informers/classical/sa/`) — a compiled C++
+    simulated-annealing solver. Note that for this, you have to build the executable, follow instructions in qReduMIS/qReduMIS_package/qReduMIS/solver/informers/classical/sa/README.md
+  * **ExactInformer** (`solver/informers/classical/exact/`) — an exact max-clique
+    baseline (NetworkX), useful for testing and comparison.
 
-We also have the backend system in `qReduMIS/solver/quantum_informer/backend_system/`,
-which is utilized to connect and run experiments. It contains:
-
-* Backend System: a flexible backend system that supports multiple quantum
-  computing platforms, including simulators and real quantum devices. The
-  BackendFactory class in `backend_generator.py` allows for easy selection and
-  instantiation of different backends based on user requirements. The subclasses
-  implemented are for Rydberg-atom backends:
-
-  * RydbergAtomBackend: a specialized backend for simulating quantum experiments
-    using Rydberg atoms. It includes methods for setting up the Hamiltonian
-    corresponding to the input problem graph, checking connectivity, and
-    executing quantum programs.
-    * Simulator: It utilizes the Braket LocalSimulator to simulate the behavior
-      of Rydberg atoms in quantum computations
-    * Aquila: It utilizes AWS Braket for connecting to QuEra's Aquila quantum
-      machine
 
 ## Requirements
 
-This package requires Python 3.9.
+This package requires Python 3.11.
 
-Then follow the following steps to set up environment. In this directory do:
+To set up the environment, from this directory run:
 
 1. `pip install poetry`
 2. `poetry install`
 
+This installs everything needed to run all four informers (including `qiskit`,
+`qiskit-aer` and `amazon-braket-sdk`). To also reproduce the paper notebooks,
+install the optional group:
+
+```
+poetry install --with paper
+```
+
+The SA informer additionally needs its C++ binary compiled once:
+
+```
+cd qReduMIS/solver/informers/classical/sa/_cpp && make
+```
+
 ## How to use it?
 
-To run example module do below.
+Run the per-informer examples (from the repository root):
 
-1. `cd examples`
-2. `poetry run python script.py`
+```
+poetry run python examples/informers/example_exact.py
+poetry run python examples/informers/example_qaoa.py
+poetry run python examples/informers/example_quantum_annealing.py
+poetry run python examples/informers/example_sa.py
+```
 
-This script runs the qReduMIS algorithm for a given problem instance and using
-some configuration. After running, if the boolean `enable_storing` is set to
-`True`, some results json file are created and located in `examples/results/`:
-* `final_res.json`: contains the atom positions of the MIS solution and the
-  number of iterations that the qReduMIS algorithm was executed
-* `res_iteration{it}.json`: for each classical iteration of qReduMIS, this file
-  is created. This contins some particular information and results from the
-  iteration. Refer to `mis_solver.py` for the details of what is stored.
+Or open the minimal notebook `qReduMIS/example.ipynb`.
 
-Note: this example is fully reducible and does not need to call the quantum
-backend. We use this problem instance to illustrate how this package works.
+Minimal graph-based usage:
 
-## To run tests:
-`poetry run pytest tests/`
+```python
+import networkx as nx
+from qReduMIS import MISSolver
+from qReduMIS.solver.informers.quantum.qaoa import QAOAInformer
 
-## Configurations
+G = nx.erdos_renyi_graph(n=20, p=0.25, seed=42)
+informer = QAOAInformer(selection_strategy="inset", num_shots=1000, p=2)
+solver = MISSolver(informer=informer, top_k_solutions=2, max_iteration_limit=10)
+solution, n_iter = solver.solve(G, seed_graph=0, cshot=0)
+print(f"MIS size = {len(solution)}")
+```
 
-Set up the configuration.ini file indicating the path to the schedule to be used
-in case of running with a Rydberg-based quantum backend.
-For this, edit `qReduMIS/configurations.ini`
+Swap the informer object to change backend — the solver code stays the same.
+For the Rydberg quantum-annealing informer, which operates on atom positions and
+selects a Braket backend via `BackendFactory`, see
+`examples/informers/example_quantum_annealing.py`.
 
-Refer to `examples/script.py` on how to import and use MISSolver()
+### Configuration
+
+Default hyperparameters live in `qReduMIS/configurations.ini`:
+
+  * `[quantum] schedule` — path to the Rydberg drive schedule (absolute, or
+    relative to the package root). A sample schedule ships with the package.
+  * `[qaoa] p`, `qaoa_params`, `num_shots` — QAOA defaults, overridden by any
+    argument passed explicitly to `QAOAInformer(...)`.
+
+To run tests:
+
+```
+poetry run pytest tests/
+```
+
+See `qReduMIS/README.md` for the full library overview, including how to
+implement your own informer.
 
 SPDX-License-Identifier: Apache-2.0 @ Copyright 2025: Amazon Web Services, Inc.
-Developed as part of an engagement with JPMorgan Chase & Co.
+Developed as part of an engagement with JPMorgan Chase & Co. 
 
 ----

@@ -2,8 +2,6 @@
 # // SPDX-License-Identifier: Apache-2.0
 # // Copyright 2025: Amazon Web Services, Inc. - Contributions from JPMC
 ###############################################################################
-import time
-import tracemalloc
 from abc import ABC, abstractmethod
 
 
@@ -13,6 +11,7 @@ class Backend(ABC):
     """
 
     def __init__(self):
+        """Initialise empty ``device`` and ``backend_id`` attributes."""
         self.device = None
         self.backend_id = None
 
