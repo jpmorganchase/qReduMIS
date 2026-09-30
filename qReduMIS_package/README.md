@@ -1,30 +1,21 @@
-# Code for paper "qReduMIS: A Quantum-Informed Reduction Algorithm for the Maximum Independent Set Problem"
+# qReduMIS — Python package
 
-This repository contains the package of the qReduMIS algorithm, which is a quantum-informed reduction algorithm for the Maximum Independent Set (MIS) problem (arXiv:2503.12551).
+The installable `qredumis` package: a quantum-informed reduction algorithm for
+the **Maximum Independent Set (MIS)** problem. This is the implementation behind
+both qReduMIS papers — the original quantum-annealing formulation
+([Phys. Rev. Res. 8, 033296](https://link.aps.org/doi/10.1103/nh3b-1wv5),
+[arXiv:2503.12551](https://arxiv.org/abs/2503.12551)) and its QAOA extension
+applied to portfolio selection
+([arXiv:2607.01037](https://arxiv.org/abs/2607.01037)).
 
-## Citing the work
-```
-@article{nh3b-1wv5,
-  title = {Quantum-informed reduction algorithm for the maximum independent set problem},
-  author = {Schuetz, Martin J. A. and Yalovetzky, Romina and Andrist, Ruben S. and Salton, Grant and Sun, Yue and Raymond, Rudy and Chakrabarti, Shouvanik and Acharya, Atithi and Shaydulin, Ruslan and Pistoia, Marco and Katzgraber, Helmut G.},
-  journal = {Phys. Rev. Res.},
-  volume = {8},
-  issue = {3},
-  pages = {033296},
-  numpages = {13},
-  year = {2026},
-  month = {Sep},
-  publisher = {American Physical Society},
-  doi = {10.1103/nh3b-1wv5},
-  url = {https://link.aps.org/doi/10.1103/nh3b-1wv5}
-}
-```
+> **Citing this work** — BibTeX entries for both papers are in the
+> [repository README](../README.md#citation).
 
-## This repository is divided into the folders:
-  * examples/: runnable example script (script.py) and notebook (example.ipynb), with sample input data and results.
-  * qReduMIS/: the package source code
-  * tests/: the test suite
-  * ../results_experiments/: scripts, data and notebooks to reproduce the paper results
+## Contents of this folder
+  * `examples/`: a runnable example script (`script.py`) and an annotated notebook (`example.ipynb`), with sample input data and results.
+  * `qReduMIS/`: the package source code — see [`qReduMIS/README.md`](qReduMIS/README.md) for the library/API overview
+  * `tests/`: the test suite
+  * [`../results_experiments/`](../results_experiments/): scripts, data and notebooks to reproduce the paper results
 
 ## Features
 
@@ -50,9 +41,8 @@ Available informers:
       * **Simulator**: Braket `LocalSimulator("braket_ahs")`.
       * **Aquila**: QuEra's Aquila QPU via AWS Braket.
   * **SAInformer** (`solver/informers/classical/sa/`) — a compiled C++
-    simulated-annealing solver. Note that for this, you have to build the executable, follow instructions in qReduMIS/qReduMIS_package/qReduMIS/solver/informers/classical/sa/README.md
-  * **ExactInformer** (`solver/informers/classical/exact/`) — an exact max-clique
-    baseline (NetworkX), useful for testing and comparison.
+    simulated-annealing solver. This one requires building the executable first;
+    see [`qReduMIS/solver/informers/classical/sa/README.md`](qReduMIS/solver/informers/classical/sa/README.md).
 
 
 ## Requirements
@@ -64,7 +54,7 @@ To set up the environment, from this directory run:
 1. `pip install poetry`
 2. `poetry install`
 
-This installs everything needed to run all four informers (including `qiskit`,
+This installs everything needed to run all three informers (including `qiskit`,
 `qiskit-aer` and `amazon-braket-sdk`). To also reproduce the paper notebooks,
 install the optional group:
 
@@ -80,16 +70,14 @@ cd qReduMIS/solver/informers/classical/sa/_cpp && make
 
 ## How to use it?
 
-Run the per-informer examples (from the repository root):
+Run the end-to-end example (from this directory):
 
 ```
-poetry run python examples/informers/example_exact.py
-poetry run python examples/informers/example_qaoa.py
-poetry run python examples/informers/example_quantum_annealing.py
-poetry run python examples/informers/example_sa.py
+poetry run python examples/script.py
 ```
 
-Or open the minimal notebook `qReduMIS/example.ipynb`.
+For an annotated walkthrough covering every informer and the Rydberg backends,
+open `examples/example.ipynb`; `qReduMIS/example.ipynb` is a shorter variant.
 
 Minimal graph-based usage:
 
@@ -107,8 +95,8 @@ print(f"MIS size = {len(solution)}")
 
 Swap the informer object to change backend — the solver code stays the same.
 For the Rydberg quantum-annealing informer, which operates on atom positions and
-selects a Braket backend via `BackendFactory`, see
-`examples/informers/example_quantum_annealing.py`.
+selects a Braket backend via `BackendFactory`, see the corresponding section of
+`examples/example.ipynb`.
 
 ### Configuration
 

@@ -18,7 +18,6 @@ Concrete implementations:
   - :class:`qReduMIS.solver.informers.classical.sa.informer.SAInformer` — compiled C++ SA solver
   - :class:`qReduMIS.solver.informers.quantum.quantumannealing.informer.QuantumAnnealingInformer`
     — Rydberg-atom backends (positions-based; queried directly rather than through MISSolver)
-  - :class:`qReduMIS.solver.informers.classical.exact.informer.ExactInformer` — exact max-clique baseline
 """
 from __future__ import annotations
 

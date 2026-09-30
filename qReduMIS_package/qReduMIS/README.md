@@ -28,12 +28,12 @@ That's it. Pair `MISSolver` with whichever informer you want:
 | [QAOAInformer](solver/informers/quantum/qaoa/informer.py)                      | local QAOA statevector / Qiskit Aer      | `qiskit`, `qiskit-aer` |
 | [SAInformer](solver/informers/classical/sa/informer.py)                        | wrapped C++ simulated-annealing binary   | C++ compiler       |
 | [QuantumAnnealingInformer](solver/informers/quantum/quantumannealing/informer.py) | Braket `LocalSimulator` or QuEra Aquila  | `amazon-braket-sdk`|
-| [ExactInformer](solver/informers/classical/exact/informer.py)                  | exact max-clique baseline (NetworkX)     | none               |
 
 All of these run with the **main** package dependencies (`poetry install`);
-none requires an optional extra. Runnable scripts for each informer live in
-[examples/informers/](../examples/informers/), and a minimal end-to-end
-notebook is at [example.ipynb](example.ipynb).
+none requires an optional extra. A runnable end-to-end script lives at
+[examples/script.py](../examples/script.py), an annotated walkthrough of every
+informer at [examples/example.ipynb](../examples/example.ipynb), and a minimal
+notebook at [example.ipynb](example.ipynb).
 
 ---
 
@@ -58,8 +58,7 @@ qReduMIS/
         │   ├── qaoa/              #   QAOAInformer + utils + tuning
         │   └── quantumannealing/ #   QuantumAnnealingInformer + backend_system
         ├── classical/     #   classical informers
-        │   ├── sa/                #   SAInformer + C++ binary
-        │   └── exact/            #   ExactInformer (max-clique baseline)
+        │   └── sa/                #   SAInformer + C++ binary
         └── corrector_strategies/ #   fix-up heuristics to repair infeasible samples
 ```
 
@@ -104,16 +103,12 @@ is unchanged:
 # Simulated annealing (needs the compiled sa_solver binary)
 from qReduMIS.solver.informers.classical.sa import SAInformer
 informer = SAInformer(selection_strategy="inset", replicas=10_000, steps=32)
-
-# Exact baseline (no quantum simulator, no binary — great for testing)
-from qReduMIS.solver.informers.classical.exact import ExactInformer
-informer = ExactInformer(selection_strategy="inset")
 ```
 
 The **quantum-annealing** informer works on atom positions rather than a
 `networkx.Graph`, so it is queried directly rather than through `MISSolver`;
-see
-[examples/informers/example_quantum_annealing.py](../examples/informers/example_quantum_annealing.py)
+see the corresponding section of
+[examples/example.ipynb](../examples/example.ipynb)
 for how to run `QuantumAnnealingInformer` and select a Braket backend via
 `BackendFactory`.
 

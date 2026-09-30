@@ -1,32 +1,83 @@
-# Code for paper "qReduMIS: A Quantum-Informed Reduction Algorithm for the Maximum Independent Set Problem"
+# Code for the quantum-informed Reduction Algorithm for the MIS problem (qReduMIS)
 
-This repository contains the package of the qReduMIS algorithm, which is a
-quantum-informed reduction algorithm for the Maximum Independent Set (MIS)
-problem ([arXiv:2503.12551](https://arxiv.org/abs/2503.12551)). qReduMIS is a
-hybrid classical-quantum algorithm, which leverages a classical reducer and a
-quantum informer which informs of nodes to remove in order to unlock the
-classical reduction of the kernel graph (resulted from the previous classical
-reduction).
+qReduMIS is a hybrid classical–quantum algorithm for the **Maximum Independent
+Set (MIS)** problem. It pairs a *classical reducer* with a *quantum informer*
+that selects nodes to freeze/remove, unlocking further classical reduction of
+the kernel graph left over from the previous reduction step.
 
-## Citing the work
-```
-@article{schuetz2025qredumis,
-  title={qReduMIS: A Quantum-Informed Reduction Algorithm for the Maximum Independent Set Problem},
-  author={Schuetz, Martin JA and Yalovetzky, Romina and Andrist, Ruben S and Salton, Grant and Sun, Yue and Raymond, Rudy and Chakrabarti, Shouvanik and Acharya, Atithi and Shaydulin, Ruslan and Pistoia, Marco and others},
-  journal={arXiv preprint arXiv:2503.12551},
-  year={2025}
+This repository contains the algorithm library together with the results
+reported in two scholarly papers:
+
+1. **qReduMIS**, introduced with a quantum-annealing informer and applied to
+   unit-disk MIS graphs —
+   *"Quantum-informed reduction algorithm for the maximum independent set
+   problem"*, Phys. Rev. Res. **8**, 033296 (2026)
+   ([arXiv:2503.12551](https://arxiv.org/abs/2503.12551)).
+   Reproduction material: [`results_experiments/quantum_informed_mis/`](results_experiments/quantum_informed_mis/).
+
+2. **Quantum-informed portfolio selection**, extending qReduMIS to the Quantum
+   Approximate Optimization Algorithm (QAOA) on universal quantum computers and
+   applying it end-to-end to portfolio selection over market graphs built from
+   real open-source market data
+   ([arXiv:2607.01037](https://arxiv.org/abs/2607.01037)).
+   Reproduction material: [`results_experiments/quantum_informed_portfolio_selection/`](results_experiments/quantum_informed_portfolio_selection/).
+
+## Citation
+
+If you use this code, please cite the relevant paper(s). These entries are the
+canonical ones for the repository; the per-paper folders under
+`results_experiments/` repeat only their own.
+
+**1 — qReduMIS (Phys. Rev. Research, 2026)**
+
+```bibtex
+@article{schuetz2026qredumis,
+  title = {Quantum-informed reduction algorithm for the maximum independent set problem},
+  author = {Schuetz, Martin J. A. and Yalovetzky, Romina and Andrist, Ruben S. and Salton, Grant and Sun, Yue and Raymond, Rudy and Chakrabarti, Shouvanik and Acharya, Atithi and Shaydulin, Ruslan and Pistoia, Marco and Katzgraber, Helmut G.},
+  journal = {Phys. Rev. Res.},
+  volume = {8},
+  issue = {3},
+  pages = {033296},
+  numpages = {13},
+  year = {2026},
+  month = {Sep},
+  publisher = {American Physical Society},
+  doi = {10.1103/nh3b-1wv5},
+  url = {https://link.aps.org/doi/10.1103/nh3b-1wv5}
 }
 ```
 
-## Organization of repository:
+**2 — Quantum-informed portfolio selection (2026)**
 
-This repository contains both the package of the algorithm qReduMIS introduced
-in the scholarly paper as well as the main results discussed in it. This
-repository is divided into two folders below. In each of these folders there are
-README.md giving more details.
+```bibtex
+@article{yalovetzky2026quantum,
+  title = {Quantum-Informed Portfolio Selection: An End-to-End Pipeline Validated on Trapped-Ion Hardware with Real Market Data},
+  author = {Yalovetzky, Romina and Schuetz, Martin J. A. and He, Zichang and Shen, Jiayu and Sun, Yue and Raymond, Rudy and Sahay, Shauna and Perla, Kishore and Andrist, Ruben S. and Salton, Grant and others},
+  journal = {arXiv preprint arXiv:2607.01037},
+  year = {2026}
+}
+```
 
-* `qReduMIS_package/`: contains the code package of the algorithm
-* `results_experiments/`: contains the main results from the paper
+## Organization of the repository
+
+Each folder below has its own `README.md` with further detail:
+
+| Path | Contents |
+| ---- | -------- |
+| [`qReduMIS_package/`](qReduMIS_package/) | The installable `qredumis` package — installation, examples and tests |
+| [`qReduMIS_package/qReduMIS/`](qReduMIS_package/qReduMIS/) | Library overview and API reference, including how to implement your own informer |
+| [`results_experiments/quantum_informed_mis/`](results_experiments/quantum_informed_mis/) | Data and notebooks reproducing paper 1 |
+| [`results_experiments/quantum_informed_portfolio_selection/`](results_experiments/quantum_informed_portfolio_selection/) | Data and notebooks reproducing paper 2 |
+
+## Getting started
+
+```bash
+pip install poetry
+poetry install
+```
+
+See [`qReduMIS_package/README.md`](qReduMIS_package/README.md) for usage, the
+available informers, and how to run the tests.
 
 SPDX-License-Identifier: Apache-2.0 @ Copyright 2025: Amazon Web Services, Inc.
 Developed as part of an engagement with JPMorgan Chase & Co.

@@ -50,7 +50,7 @@ def main():
     RESULTS_DIR.mkdir(exist_ok=True)
 
     # Any informer implementing the common contract can be dropped in here
-    # (QAOAInformer, ExactInformer, SAInformer, ...) without touching the loop.
+    # (QAOAInformer, SAInformer, ...) without touching the loop.
     informer = QAOAInformer(
         selection_strategy="inset",
         num_shots=500,

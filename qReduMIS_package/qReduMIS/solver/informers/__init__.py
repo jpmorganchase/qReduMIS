@@ -22,8 +22,6 @@ Classical informers (:mod:`qReduMIS.solver.informers.classical`):
 
   - :mod:`~qReduMIS.solver.informers.classical.sa`
         Simulated annealing (C++ binary)
-  - :mod:`~qReduMIS.solver.informers.classical.exact`
-        Exact / baseline solver (OR-Tools)
 
 Shared helpers:
 
