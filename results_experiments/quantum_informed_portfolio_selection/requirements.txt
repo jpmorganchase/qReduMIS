@@ -1,0 +1,26 @@
+# Requirements for reproducing paper figures (pip fallback).
+#
+# PREFERRED: use Poetry, which is the single source of truth for all versions:
+#   cd <repository_root>
+#   python3 -m pip install poetry && poetry install --with paper
+#
+# pip fallback (Python 3.11), from the repository root:
+#   pip install -e .
+#   pip install -r results_experiments/quantum_informed_portfolio_selection/requirements.txt
+#
+# The versions below are kept in sync with pyproject.toml. In particular
+# numpy and networkx are pinned to match the qReduMIS package (numpy 1.23.5,
+# networkx 2.8.8) to avoid the earlier conflict with the qReduMIS core pins.
+
+numpy==1.23.5
+networkx==2.8.8
+matplotlib==3.7.1
+pandas==2.3.3
+ortools==9.14.6206
+pytket==1.25.0
+qiskit==2.3.1
+# scipy 1.15.x (the newest compatible with numpy 1.23.5) fails to load on
+# recent macOS; 1.14.1 works everywhere and is what the outputs were made with.
+scipy==1.14.1
+ipykernel==7.3.0
+nbconvert==7.17.1

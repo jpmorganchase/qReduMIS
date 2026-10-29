@@ -54,13 +54,13 @@ matplotlib="3.7.1"
 # results_experiments/. Install with: poetry install --with paper
 [tool.poetry.group.paper.dependencies]
 pandas = "2.3.3"
-seaborn = "0.13.2"
-statsmodels = "0.14.6"
-scipy = "1.15.3"
 ortools = "9.14.6206"
-pyyaml = "6.0.3"
 pytket = "1.25.0"
 nbconvert = "7.17.1"
+# scipy.stats is used by the optTTS notebook. Pinned because scipy 1.15.x, the
+# newest release compatible with numpy 1.23.5, ships macOS arm64 wheels whose
+# compiled extensions fail to load on recent macOS; 1.14.1 loads everywhere.
+scipy = "1.14.1"
 
 [build-system]
 requires = ["poetry-core"]

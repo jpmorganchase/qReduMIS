@@ -51,8 +51,8 @@ This package requires Python 3.11.
 
 To set up the environment, from this directory run:
 
-1. `pip install poetry`
-2. `poetry install`
+1. `python3 -m pip install poetry` (or `pipx install poetry`)
+2. `poetry install` (if `poetry` is not on your `PATH`, use `python3 -m poetry install`)
 
 This installs everything needed to run all three informers (including `qiskit`,
 `qiskit-aer` and `amazon-braket-sdk`). To also reproduce the paper notebooks,

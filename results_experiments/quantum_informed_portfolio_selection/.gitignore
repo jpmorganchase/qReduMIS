@@ -1,0 +1,24 @@
+# ---------------------------------------------------------------------------
+# Rendered figures
+# ---------------------------------------------------------------------------
+# No rendered figure ships with this release: the notebooks create figures/
+# on demand and write their plots there.  Keeping it out of the repository
+# avoids shipping two copies of every plot (one on disk, one embedded in a
+# notebook) and keeps re-running a notebook from dirtying the working tree.
+figures/
+
+# ---------------------------------------------------------------------------
+# Third-party input data
+# ---------------------------------------------------------------------------
+# OR-Library portfolio benchmark, downloaded manually by the user for
+# notebooks/market_graph_generator.ipynb (see README, data provenance).
+problem_instances/port5.txt
+
+# ---------------------------------------------------------------------------
+# Python bytecode
+# ---------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+
+# macOS
+.DS_Store

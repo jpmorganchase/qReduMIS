@@ -21,6 +21,8 @@ reported in two scholarly papers:
    real open-source market data
    ([arXiv:2607.01037](https://arxiv.org/abs/2607.01037)).
    Reproduction material: [`results_experiments/quantum_informed_portfolio_selection/`](results_experiments/quantum_informed_portfolio_selection/).
+  See the [portfolio results file guide](results_experiments/quantum_informed_portfolio_selection/individual_results/README.md)
+  for the purpose of each shipped experiment-result file.
 
 ## Citation
 
@@ -68,12 +70,13 @@ Each folder below has its own `README.md` with further detail:
 | [`qReduMIS_package/qReduMIS/`](qReduMIS_package/qReduMIS/) | Library overview and API reference, including how to implement your own informer |
 | [`results_experiments/quantum_informed_mis/`](results_experiments/quantum_informed_mis/) | Data and notebooks reproducing paper 1 |
 | [`results_experiments/quantum_informed_portfolio_selection/`](results_experiments/quantum_informed_portfolio_selection/) | Data and notebooks reproducing paper 2 |
+| [`results_experiments/quantum_informed_portfolio_selection/individual_results/README.md`](results_experiments/quantum_informed_portfolio_selection/individual_results/README.md) | Description of every shipped individual result file for paper 2 |
 
 ## Getting started
 
 ```bash
-pip install poetry
-poetry install
+python3 -m pip install poetry   # or `pipx install poetry`
+poetry install                  # if `poetry` is not found: python3 -m poetry install
 ```
 
 See [`qReduMIS_package/README.md`](qReduMIS_package/README.md) for usage, the
