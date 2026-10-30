@@ -13,7 +13,16 @@ from qReduMIS.solver.utils.config_helper import read_config
 
 def load_schedule():
     """
-    Load given schedule from configuration file
+    Loads the Rydberg drive schedule referenced by ``configurations.ini``.
+
+    The ``[quantum] schedule`` entry may be either an absolute path or a path
+    relative to the package root (the directory containing
+    ``configurations.ini``).  Relative paths are resolved against the package
+    root first, then against the current working directory, so the schedule can
+    be found regardless of where the process was launched from.
+
+    Returns:
+        dict or None: The schedule loaded from the file, or None if an error occurs.
     """
 
     config = read_config()
@@ -22,6 +31,16 @@ def load_schedule():
     if not file_path:
         print("Error: No file path provided.")
         return None
+
+    # Resolve relative schedule paths against the package root so the schedule
+    # is found no matter the current working directory.
+    if not os.path.isabs(file_path) and not os.path.exists(file_path):
+        package_root = os.path.abspath(
+            os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..")
+        )
+        candidate = os.path.join(package_root, file_path)
+        if os.path.exists(candidate):
+            file_path = candidate
 
     try:
         with open(file_path, "r") as file:
@@ -45,16 +64,16 @@ def get_drive(
     phase_values: List[float],
 ) -> DrivingField:
     """
-    Method to obtain the driving field from a set of time points and values of the fields
+    Obtains the driving field from a set of time points and values of the fields.
 
     Args:
-        times: The time points of the driving field
-        amplitude_values: The values of the amplitude
-        detuning_values: The values of the detuning
-        phase_values: The values of the phase
+        times (List[float]): The time points of the driving field.
+        amplitude_values (List[float]): The values of the amplitude.
+        detuning_values (List[float]): The values of the detuning.
+        phase_values (List[float]): The values of the phase.
 
     Returns:
-        DrivingField: The driving field obtained
+        DrivingField: The driving field obtained.
     """
 
     assert len(times) == len(amplitude_values)

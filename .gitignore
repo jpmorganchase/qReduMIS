@@ -1,0 +1,66 @@
+# ---------------------------------------------------------------------------
+# Compiled C++ artifacts
+# ---------------------------------------------------------------------------
+# The SA informer's `sa_solver` binary is built locally via
+# `cd qReduMIS_package/qReduMIS/solver/informers/classical/sa/_cpp && make`.
+# The sources (*.cc, *.h, *.hpp, Makefile) are tracked; the binary is not, so
+# no executable is ever released with the library.
+sa_solver
+*.o
+*.obj
+*.so
+*.dylib
+*.a
+
+# ---------------------------------------------------------------------------
+# Python
+# ---------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# ---------------------------------------------------------------------------
+# Environments
+# ---------------------------------------------------------------------------
+.venv/
+venv/
+env/
+
+# ---------------------------------------------------------------------------
+# Dependency lock file
+# ---------------------------------------------------------------------------
+# qReduMIS is a library, so it deliberately does not pin a resolved dependency
+# set; consumers resolve against their own index. Locks generated behind a
+# corporate mirror also embed internal Artifactory URLs, so never commit one.
+poetry.lock
+
+# ---------------------------------------------------------------------------
+# Tooling caches
+# ---------------------------------------------------------------------------
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.ipynb_checkpoints/
+
+# ---------------------------------------------------------------------------
+# Runtime output
+# ---------------------------------------------------------------------------
+# The Rydberg and OR-Tools backends dump each iteration's raw shots to
+# `result_backend_it<N>.json` in the current working directory, so simply
+# running the example notebook or a solve loop litters the tree with them.
+# They are per-run data, never source.
+result_backend_it*.json
+
+# Output folder created by qReduMIS_package/examples/script.py.
+qReduMIS_package/examples/results/
+
+# ---------------------------------------------------------------------------
+# OS / editor
+# ---------------------------------------------------------------------------
+.DS_Store

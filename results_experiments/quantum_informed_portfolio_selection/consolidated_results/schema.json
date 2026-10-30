@@ -1,0 +1,865 @@
+{
+  "benchmarks": {
+    "int_columns": [
+      "N",
+      "baseline",
+      "cshot",
+      "mis",
+      "num iteration",
+      "p",
+      "seed"
+    ],
+    "key_orders": [
+      [
+        "N",
+        "seed",
+        "p",
+        "mis",
+        "pmis",
+        "baseline"
+      ],
+      [
+        "N",
+        "seed",
+        "cshot",
+        "p",
+        "atom positions MIS",
+        "num iteration"
+      ]
+    ]
+  },
+  "flat_json": {
+    "key_orders": [
+      [
+        "sizes",
+        "seed",
+        "pmis qaoa",
+        "AR",
+        "p"
+      ],
+      [
+        "sizes",
+        "seed",
+        "p qaoa p10",
+        "p qaoa p4"
+      ],
+      [
+        "sizes",
+        "seed",
+        "p qaoa",
+        "indep ratio"
+      ],
+      [
+        "sizes",
+        "seed",
+        "pmis qaoa p=1"
+      ],
+      [
+        "sizes",
+        "seed",
+        "qredumis sol",
+        "baseline sol",
+        "num_its",
+        "classical shot"
+      ],
+      [
+        "sizes",
+        "seed",
+        "qredumis sol",
+        "num_its",
+        "classical shot"
+      ],
+      [
+        "sizes",
+        "seed",
+        "classical shot avg",
+        "classical shot std",
+        "p qredumis"
+      ],
+      [
+        "sizes",
+        "seed",
+        "pmis qredumis",
+        "avg classical shots",
+        "std clasical shots"
+      ],
+      [
+        "sizes",
+        "seed",
+        "classical shot avg",
+        "classical shot std",
+        "p qredumis",
+        "p qaoa",
+        "num layers"
+      ],
+      [
+        "sizes",
+        "seed",
+        "qredumis sol",
+        "qaoa plain sol",
+        "ground truth",
+        "pmis qaoa plain"
+      ]
+    ],
+    "kinds": {
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-11_p2.json": "frame",
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-11_p3.json": "frame",
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-11_p4.json": "frame",
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-11_p5.json": "frame",
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-11_p6.json": "frame",
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-12_p2.json": "frame",
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-12_p3.json": "frame",
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-12_p4.json": "frame",
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-12_p5.json": "frame",
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-12_p6.json": "frame",
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-13_p2.json": "frame",
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-13_p3.json": "frame",
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-13_p4.json": "frame",
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-13_p5.json": "frame",
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-13_p6.json": "frame",
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-14_p2.json": "frame",
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-14_p4.json": "frame",
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-15_p2.json": "frame",
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-15_p4.json": "frame",
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-11_p2.json": "frame",
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-11_p3.json": "frame",
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-11_p4.json": "frame",
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-11_p5.json": "frame",
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-11_p6.json": "frame",
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-12_p2.json": "frame",
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-12_p3.json": "frame",
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-12_p4.json": "frame",
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-12_p5.json": "frame",
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-12_p6.json": "frame",
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-13_p2.json": "frame",
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-13_p3.json": "frame",
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-13_p4.json": "frame",
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-13_p5.json": "frame",
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-13_p6.json": "frame",
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-14_p2.json": "frame",
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-15_p2.json": "frame"
+    },
+    "types_by_file": {
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-11_p2.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "mis",
+          "pmis",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "baseline": "int64",
+          "cshot": "int64",
+          "mis": "int64",
+          "p": "int64",
+          "pmis": "float64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-11_p3.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "mis",
+          "pmis",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "baseline": "int64",
+          "cshot": "int64",
+          "mis": "int64",
+          "p": "int64",
+          "pmis": "float64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-11_p4.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "mis",
+          "pmis",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "baseline": "int64",
+          "cshot": "int64",
+          "mis": "int64",
+          "p": "int64",
+          "pmis": "float64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-11_p5.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "mis",
+          "pmis",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "baseline": "int64",
+          "cshot": "int64",
+          "mis": "int64",
+          "p": "int64",
+          "pmis": "float64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-11_p6.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "mis",
+          "pmis",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "baseline": "int64",
+          "cshot": "int64",
+          "mis": "int64",
+          "p": "int64",
+          "pmis": "float64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-12_p2.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "mis",
+          "pmis",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "baseline": "int64",
+          "cshot": "int64",
+          "mis": "int64",
+          "p": "int64",
+          "pmis": "float64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-12_p3.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "mis",
+          "pmis",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "baseline": "int64",
+          "cshot": "int64",
+          "mis": "int64",
+          "p": "int64",
+          "pmis": "float64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-12_p4.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "mis",
+          "pmis",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "baseline": "int64",
+          "cshot": "int64",
+          "mis": "int64",
+          "p": "int64",
+          "pmis": "float64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-12_p5.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "mis",
+          "pmis",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "baseline": "int64",
+          "cshot": "int64",
+          "mis": "int64",
+          "p": "int64",
+          "pmis": "float64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-12_p6.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "mis",
+          "pmis",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "baseline": "int64",
+          "cshot": "int64",
+          "mis": "int64",
+          "p": "int64",
+          "pmis": "float64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-13_p2.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "mis",
+          "pmis",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "baseline": "int64",
+          "cshot": "int64",
+          "mis": "int64",
+          "p": "int64",
+          "pmis": "float64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-13_p3.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "mis",
+          "pmis",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "baseline": "int64",
+          "cshot": "int64",
+          "mis": "int64",
+          "p": "int64",
+          "pmis": "float64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-13_p4.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "mis",
+          "pmis",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "baseline": "int64",
+          "cshot": "int64",
+          "mis": "int64",
+          "p": "int64",
+          "pmis": "float64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-13_p5.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "mis",
+          "pmis",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "baseline": "int64",
+          "cshot": "int64",
+          "mis": "int64",
+          "p": "int64",
+          "pmis": "float64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-13_p6.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "mis",
+          "pmis",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "baseline": "int64",
+          "cshot": "int64",
+          "mis": "int64",
+          "p": "int64",
+          "pmis": "float64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-14_p2.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "mis",
+          "pmis",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "baseline": "int64",
+          "cshot": "int64",
+          "mis": "int64",
+          "p": "int64",
+          "pmis": "float64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-14_p4.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "mis",
+          "pmis",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "baseline": "int64",
+          "cshot": "int64",
+          "mis": "int64",
+          "p": "int64",
+          "pmis": "float64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-15_p2.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "mis",
+          "pmis",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "baseline": "int64",
+          "cshot": "int64",
+          "mis": "int64",
+          "p": "int64",
+          "pmis": "float64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qaoa_3regular_graphs_2025-09-15_p4.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "mis",
+          "pmis",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "baseline": "int64",
+          "cshot": "int64",
+          "mis": "int64",
+          "p": "int64",
+          "pmis": "float64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-11_p2.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "atom positions MIS",
+          "num iteration",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "atom positions MIS": "object",
+          "baseline": "int64",
+          "cshot": "int64",
+          "num iteration": "int64",
+          "p": "int64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-11_p3.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "atom positions MIS",
+          "num iteration",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "atom positions MIS": "object",
+          "baseline": "int64",
+          "cshot": "int64",
+          "num iteration": "int64",
+          "p": "int64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-11_p4.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "atom positions MIS",
+          "num iteration",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "atom positions MIS": "object",
+          "baseline": "int64",
+          "cshot": "int64",
+          "num iteration": "int64",
+          "p": "int64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-11_p5.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "atom positions MIS",
+          "num iteration",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "atom positions MIS": "object",
+          "baseline": "int64",
+          "cshot": "int64",
+          "num iteration": "int64",
+          "p": "int64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-11_p6.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "atom positions MIS",
+          "num iteration",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "atom positions MIS": "object",
+          "baseline": "int64",
+          "cshot": "int64",
+          "num iteration": "int64",
+          "p": "int64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-12_p2.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "atom positions MIS",
+          "num iteration",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "atom positions MIS": "object",
+          "baseline": "int64",
+          "cshot": "int64",
+          "num iteration": "int64",
+          "p": "int64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-12_p3.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "atom positions MIS",
+          "num iteration",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "atom positions MIS": "object",
+          "baseline": "int64",
+          "cshot": "int64",
+          "num iteration": "int64",
+          "p": "int64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-12_p4.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "atom positions MIS",
+          "num iteration",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "atom positions MIS": "object",
+          "baseline": "int64",
+          "cshot": "int64",
+          "num iteration": "int64",
+          "p": "int64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-12_p5.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "atom positions MIS",
+          "num iteration",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "atom positions MIS": "object",
+          "baseline": "int64",
+          "cshot": "int64",
+          "num iteration": "int64",
+          "p": "int64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-12_p6.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "atom positions MIS",
+          "num iteration",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "atom positions MIS": "object",
+          "baseline": "int64",
+          "cshot": "int64",
+          "num iteration": "int64",
+          "p": "int64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-13_p2.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "atom positions MIS",
+          "num iteration",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "atom positions MIS": "object",
+          "baseline": "int64",
+          "cshot": "int64",
+          "num iteration": "int64",
+          "p": "int64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-13_p3.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "atom positions MIS",
+          "num iteration",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "atom positions MIS": "object",
+          "baseline": "int64",
+          "cshot": "int64",
+          "num iteration": "int64",
+          "p": "int64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-13_p4.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "atom positions MIS",
+          "num iteration",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "atom positions MIS": "object",
+          "baseline": "int64",
+          "cshot": "int64",
+          "num iteration": "int64",
+          "p": "int64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-13_p5.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "atom positions MIS",
+          "num iteration",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "atom positions MIS": "object",
+          "baseline": "int64",
+          "cshot": "int64",
+          "num iteration": "int64",
+          "p": "int64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-13_p6.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "atom positions MIS",
+          "num iteration",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "atom positions MIS": "object",
+          "baseline": "int64",
+          "cshot": "int64",
+          "num iteration": "int64",
+          "p": "int64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-14_p2.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "atom positions MIS",
+          "num iteration",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "atom positions MIS": "object",
+          "baseline": "int64",
+          "cshot": "int64",
+          "num iteration": "int64",
+          "p": "int64",
+          "seed": "int64"
+        }
+      },
+      "data/data_3regular/results/benchmark_qredumis_3regular_graphs_2025-09-15_p2.json": {
+        "columns": [
+          "N",
+          "seed",
+          "cshot",
+          "p",
+          "atom positions MIS",
+          "num iteration",
+          "baseline"
+        ],
+        "dtypes": {
+          "N": "int64",
+          "atom positions MIS": "object",
+          "baseline": "int64",
+          "cshot": "int64",
+          "num iteration": "int64",
+          "p": "int64",
+          "seed": "int64"
+        }
+      }
+    }
+  }
+}
