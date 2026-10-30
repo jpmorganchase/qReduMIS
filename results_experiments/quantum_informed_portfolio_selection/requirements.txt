@@ -23,4 +23,4 @@ qiskit==2.3.1
 # recent macOS; 1.14.1 works everywhere and is what the outputs were made with.
 scipy==1.14.1
 ipykernel==7.3.0
-nbconvert==7.17.1
+nbconvert==7.17.2
